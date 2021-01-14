@@ -50,7 +50,7 @@ def split_process():
 
     prefixes = []
     subject = ""
-    html = "---\nlayout: default\n---"
+    html = "---\nlayout: default\n---\n"
 
     for x in lines:
         #print(x)
