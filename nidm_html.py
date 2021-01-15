@@ -217,6 +217,10 @@ class OwlNidmHtml:
         href = ""
         if self.owl.is_external_namespace(term_uri):
             href = " href =\""+str(term_uri)+"\""
+        else: #target link fix
+            href = " href =\"#dfn-"+self.owl.get_name(term_uri).lower()+"\""
+            if tag is "dfn":
+                href += " id=\"dfn-"+self.owl.get_name(term_uri).lower()+"\""
         
         if text is None:
             text = self.owl.get_label(term_uri)
