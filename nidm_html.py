@@ -6,8 +6,8 @@ import shlex
 owlTest = "nidm-experiment.owl"
 
 def main():
-    #owl_process()
-    split_process()
+    owl_process()
+    #split_process()
 
 def owl_process():
     owl = OwlReader(owlTest)
@@ -21,7 +21,7 @@ def owl_process():
     owl.graph.bind('qibo', 'http://www.owl-ontologies.com/Ontology1298855822.owl')
     owl.graph.bind('sio', 'http://semanticscience.org/resource/')
 
-    html = "---\nlayout: default\n---"
+    html = "---\nlayout: default\n---\n"
 
     terms = owl.get_class_names()
     terms = owl.sorted_by_labels(terms)
