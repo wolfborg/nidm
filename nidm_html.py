@@ -42,7 +42,8 @@ class OwlNidmHtml:
         self.commentable = commentable
 
         self.attributes_done = set()
-        self.text = "--- layout: default ---\n"
+        #self.text = "--- layout: default ---\n"
+        self.text = ""
         self.create_specification(subcomponents, used_by, generated_by,
                                   derived_from, attributed_to, prefix, intro)
     
@@ -717,7 +718,7 @@ if __name__ == "__main__":
         owlspec.text = owlspec.text.replace("img/", "img/nidm-results_"+nidm_version+"/") #where versions are included
 
     component_name = "nidm-experiment"
-    #owlspec._header_footer(component=component_name, version=nidm_version)
+    owlspec._header_footer(component=component_name, version=nidm_version)
     owlspec.write_specification(component=component_name, version=nidm_version)
     
     #owlspec.write_specification()
