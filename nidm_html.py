@@ -78,9 +78,9 @@ class OwlNidmHtml:
                     children=not (
                         self.owl.get_prov_class(class_name) == PROV['Entity']))
 
-            if subcomponent_name:
-                self.text += """
-            </section>"""
+            #if subcomponent_name:
+            #    self.text += """
+            #</section>"""
 
         self.close_sections()
     
@@ -460,14 +460,17 @@ class OwlNidmHtml:
 
         if not is_range:
             self.text += """
-                </section>"""
+            </section>"""
 
     def close_sections(self):
 
         #print "into close_sections"
+        tabs = ""
+        for x in range(0, self.section_open):
+            tabs += "\t"
 
         for x in range(0, self.section_open):
-            self.text += "\t"*x+"</section>\n"
+            self.text += "\n"+tabs+"</section>\n"
     
     # Write out specification
     def write_specification(self, spec_file=None, component=None,
@@ -516,95 +519,6 @@ class OwlNidmHtml:
             self.text = self.text+follow_file_open.read()
             follow_file_open.close()
 
-    def owl_process():
-        owl = OwlReader(owlTest)
-        owl.graph.bind('dct', 'http://purl.org/dc/terms/')
-        owl.graph.bind('dicom', 'http://purl.org/nidash/dicom#')
-        owl.graph.bind('nidm', 'http://purl.org/nidash/nidm#')
-        owl.graph.bind('bids', 'http://purl.org/nidash/bids#')
-        owl.graph.bind('onli', 'http://neurolog.unice.fr/ontoneurolog/v3.0/instrument.owl#')
-        owl.graph.bind('pato', 'http://purl.obolibrary.org/obo/pato#')
-        owl.graph.bind('prov', 'http://www.w3.org/ns/prov')
-        owl.graph.bind('qibo', 'http://www.owl-ontologies.com/Ontology1298855822.owl')
-        owl.graph.bind('sio', 'http://semanticscience.org/resource/')
-
-        html = "---\nlayout: default\n---\n"
-
-        terms = owl.get_class_names()
-        terms = owl.sorted_by_labels(terms)
-        
-        props = owl.get_property_names()
-        props = owl.sorted_by_labels(props)
-        for x in props:
-            print(x)
-
-        print('==========')
-        print(owl.get_prov_class(terms[0]))
-        print(owl.get_prov_class(terms[1]))
-
-        for i in range(0,10):
-            term = terms[i]
-            name = owl.get_label(term)
-            html += "<div id='" + name + "'>\n"
-            html += "<b>"
-            html += "<a href='#" + name + "'>"
-            html += name
-            html += "</a>"
-            html += "</b>: "
-            html += owl.get_definition(term)
-            html += "\n<br/><br/>\n"
-
-        html_file = open("index.html", "w")
-        html_file.write(html)
-        html_file.close()
-            
-        return
-
-
-
-    def split_process():
-        #older version without owl_reader
-        f = open(owlTest, "r")
-        lines = f.readlines()
-        f.close()
-
-        prefixes = []
-        subject = ""
-        html = "---\nlayout: default\n---\n"
-
-        for x in lines:
-            #print(x)
-            x = x.strip()
-            if x != "" and x[0] != "#" and x[0] != "@" and x[0] != "[":
-                x = shlex.split(x)
-                if len(x)<3 or x[0] == "owl:imports":
-                    continue
-                
-                if subject == "":
-                    subject = x[0]
-                    html += "<div id='" + subject + "'>\n"
-                    html += "<h2>"
-                    html += "<a href='#" + subject + "'>"
-                    html += subject
-                    html += "</a>"
-                    html += "</h2>\n"
-                    continue
-                end = x[-1]
-                vo = " ".join(x[:-1])
-                verb = x[0]
-                obj = x[1]
-                html += "<b>" + verb + "</b> "
-                html += obj + "</br>\n"
-                if end == ".":
-                    subject = ""
-                    html += "</div></br>\n"
-
-        html_file = open("index.html", "w")
-        html_file.write(html)
-        html_file.close()
-
-        #print(html)
-        return
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
@@ -720,7 +634,4 @@ if __name__ == "__main__":
     component_name = "nidm-experiment"
     owlspec._header_footer(component=component_name, version=nidm_version)
     owlspec.write_specification(component=component_name, version=nidm_version)
-    
-    #owlspec.write_specification()
-    #owlspec.owl_process()
-    #split_process()
+
