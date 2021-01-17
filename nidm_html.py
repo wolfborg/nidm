@@ -355,20 +355,21 @@ class OwlNidmHtml:
         else:
             editor = ""
 
-        if curation:
-            self.text += "<p>Curation Status: "+self.owl.get_label(curation)+"</p>"
-        if editor:
-            self.text += "<p>Editor: "+editor+"</p>"
-        if note:
-            self.text += "<p>Editor Note: "+note+"</p>"
+        if indiv_type:
+            self.text += "<p>Type: "+self.owl.get_name(indiv_type)+"</p>"
         if range_value:
             self.text += "<p>Range: "+range_value+"</p>"
         if domain:
             self.text += "<p>Domain: "+domain+"</p>"
         if same:
             self.text += "<p>Same as: "+same+"</p>"
-        if indiv_type:
-            self.text += "<p>Type: "+self.owl.get_name(indiv_type)+"</p>"
+        if curation:
+            self.text += "<p>Curation Status: "+self.owl.get_label(curation)+"</p>"
+        if editor:
+            self.text += "<p>Editor: "+editor+"</p>"
+        if note:
+            self.text += "<p>Editor Note: "+note+"</p>"
+        
 
         range_classes = list()
 
