@@ -6,7 +6,6 @@ import glob
 from nidmresults.owl.owl_reader import OwlReader
 from nidmresults.objects.constants_rdflib import *
 import markdown2
-import shlex
 
 RELPATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -529,7 +528,7 @@ if __name__ == "__main__":
     # Retrieve owl file for NIDM-Results
     if nidm_version == "dev":
         owl_file = os.path.join(TERMS_FOLDER, 'nidm-experiment.owl')
-        import_files = glob.glob(os.path.join(NIDM_EXPE_PATH, "imports", '*.ttl'))
+        import_files = glob.glob(os.path.join(TERMS_FOLDER, "imports", '*.ttl'))
     else:
         owl_file = os.path.join(RELEASED_TERMS_FOLDER, \
             'nidm-experiment_'+nidm_version+'.owl')
@@ -542,12 +541,12 @@ if __name__ == "__main__":
     subcomponents =  collections.OrderedDict()
 
     subcomponents['Project'] = [
-        NIDM['CoInvestigator'], NIDM['Gender'],NIDM['Group'], NIDM['ModelDesigner'], 
+        NIDM['CoInvestigator'], NIDM['Gender'], NIDM['Group'], NIDM['ModelDesigner'], 
         NIDM['ModelSpecification'], NIDM['PrincipalInvestigator'], NIDM['Project'],
         NIDM['Protocol'], NIDM['ResearchAssistant'], NIDM['SpecifiedPlan'], NIDM['Subject']
     ]
     subcomponents['Acquisition'] = [
-        NIDM['Acquisition'],NIDM['AcquisitionDeviceOperator'], NIDM['AcquisitionMethod'],
+        NIDM['Acquisition'], NIDM['AcquisitionDeviceOperator'], NIDM['AcquisitionMethod'],
         NIDM['AcquisitionModality'], NIDM['AcquisitionObject'], NIDM['AcquisitionObjectQuality'],
         NIDM['AcquisitionUsageType'], NIDM['AuxiliaryFile'], NIDM['AuxiliaryFileCollection'],
         NIDM['CalculatedParameter'], NIDM['Magnitude'], NIDM['PerformedPlan'], NIDM['Phase'],
