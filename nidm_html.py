@@ -338,6 +338,38 @@ class OwlNidmHtml:
         self.text += "."
         self.text += "</p>"
 
+        curation = self.owl.get_curation_status(class_uri)
+        note = self.owl.get_editor_note(class_uri)
+        range_value = self.owl.get_range(class_uri)
+        domain = self.owl.get_domain(class_uri)
+        same = self.owl.get_same_as(class_uri)
+        indiv_type = self.owl.get_individual_type(class_uri)
+
+        editor = list(self.owl.graph.objects(class_uri, OBO_TERM_EDITOR))
+        if editor:
+            if len(editor) > 1:
+                warnings.warn('Multiple editors for '
+                              + self.owl.get_label(class_uri) + ': '
+                              + ",".join(editor))
+            editor = editor[0]
+        else:
+            editor = ""
+
+        if curation:
+            self.text += "<p>Curation Status: "+self.owl.get_label(curation)+"</p>"
+        if editor:
+            self.text += "<p>Editor: "+editor+"</p>"
+        if note:
+            self.text += "<p>Editor Note: "+note+"</p>"
+        if range_value:
+            self.text += "<p>Range: "+range_value+"</p>"
+        if domain:
+            self.text += "<p>Domain: "+domain+"</p>"
+        if same:
+            self.text += "<p>Same as: "+same+"</p>"
+        if indiv_type:
+            self.text += "<p>Type: "+self.owl.get_name(indiv_type)+"</p>"
+
         range_classes = list()
 
         self.text += """
