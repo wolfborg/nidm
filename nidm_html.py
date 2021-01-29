@@ -68,14 +68,14 @@ class OwlNidmHtml:
                 classes_by_types[PROV['Agent']] + \
                 classes_by_types[None]
 
-            for class_name in all_classes:
+            for class_uri in all_classes:
                 self.create_class_section(
-                    class_name,
-                    self.owl.get_definition(class_name),
-                    self.owl.attributes.setdefault(class_name, None),
+                    class_uri,
+                    self.owl.get_definition(class_uri),
+                    self.owl.attributes.setdefault(class_uri, None),
                     used_by, generated_by, derived_from, attributed_to,
                     children=not (
-                        self.owl.get_prov_class(class_name) == PROV['Entity']))
+                        self.owl.get_prov_class(class_uri) == PROV['Entity']))
 
             #if subcomponent_name:
             #    self.text += """
@@ -250,6 +250,9 @@ class OwlNidmHtml:
 
         definition = self.format_definition(definition)
 
+        if (not self.owl.get_label(class_uri).startswith('nidm:')):
+            return
+            
         self.text += """
             <!-- """+class_label+""" ("""+class_name+""")"""+""" -->
             <section id=\""""+class_name.lower()+"""\">
@@ -401,7 +404,6 @@ class OwlNidmHtml:
                         att_tag = "a"
 
                     self.attributes_done.add(att)
-
                     # if att_label.startswith("nidm:"):
                     att_def = self.owl.get_definition(att)
                     self.text += """
