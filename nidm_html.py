@@ -247,10 +247,9 @@ class OwlNidmHtml:
                              is_range=False):
         class_label = self.owl.get_label(class_uri)
         class_name = self.owl.get_name(class_uri)
-
         definition = self.format_definition(definition)
-
-        if (not self.owl.get_label(class_uri).startswith('nidm:')):
+        
+        if (not self.owl.get_label(class_uri).startswith(self.name.lower()+':')):
             return
             
         self.text += """
@@ -505,15 +504,14 @@ class OwlNidmHtml:
             self.text += "\n"+tabs+"</section>\n"
     
     # Write out specification
-    def write_specification(self, spec_file=None, component=None,
+    def write_specification(self, spec_file="index.html", component=None,
                             version=None):
 
-        spec_file = "index.html"
         spec_open = codecs.open(spec_file, 'w', "utf-8")
         spec_open.write(self.text)
         spec_open.close()
 
-    def _header_footer(self, prev_file=None, follow_file=None, component=None,
+    def _header_footer(self, prev_file=None, intro_file=None, follow_file=None, component=None,
                        version=None):
 
         #print "into _header_footer"
@@ -521,31 +519,42 @@ class OwlNidmHtml:
         release_notes = None
         
         if component:
-            prev_file = os.path.join(
-                INCLUDE_FOLDER, component+"_"+version+"_head.html")
+            prev_file = os.path.join(INCLUDE_FOLDER, "head.html")
             if not os.path.isfile(prev_file):
-                prev_file = os.path.join(
-                    INCLUDE_FOLDER, component+"_head.html")
-            follow_file = os.path.join(
-                INCLUDE_FOLDER, component+"_"+version+"_foot.html")
+                prev_file = os.path.join(INCLUDE_FOLDER, "head.html")
+            
+            if component_name == "nidm-experiment":
+                intro_file = os.path.join(INCLUDE_FOLDER, "intro.html")
+                if not os.path.isfile(intro_file):
+                    intro_file = os.path.join(INCLUDE_FOLDER, "intro.html")
+
+            follow_file = os.path.join(INCLUDE_FOLDER, "foot.html")
             if not os.path.isfile(follow_file):
-                follow_file = os.path.join(
-                    INCLUDE_FOLDER, component+"_foot.html")
+                follow_file = os.path.join(INCLUDE_FOLDER, "foot.html")
+
             if version:
-                release_notes = os.path.join(
-                    os.path.dirname(self.owl.file),
-                    component+"_"+version+"_notes.html")
+                release_notes = os.path.join(os.path.dirname(self.owl.file), "notes.html")
                 if not os.path.isfile(release_notes):
                     release_notes = None
 
+        start_text = ""
         if prev_file is not None:
             prev_file_open = open(prev_file, 'r')
-            self.text = prev_file_open.read().decode('utf-8')+self.text
+            start_text = start_text+prev_file_open.read().decode('utf-8')
             prev_file_open.close()
+
+        if intro_file is not None:
+            intro_file_open = open(intro_file, 'r')
+            start_text = start_text+intro_file_open.read().decode('utf-8')
+            intro_file_open.close()
+        
+        self.text = start_text+self.text
+
         if release_notes is not None:
             release_note_open = open(release_notes, 'r')
             self.text = self.text+release_note_open.read()
             release_note_open.close()
+
         if follow_file is not None:
             follow_file_open = open(follow_file, 'r')
             self.text = self.text+follow_file_open.read()
@@ -667,3 +676,18 @@ if __name__ == "__main__":
     owlspec._header_footer(component=component_name, version=nidm_version)
     owlspec.write_specification(component=component_name, version=nidm_version)
 
+    
+    # BIDS
+    owl_file = os.path.join(TERMS_FOLDER, 'imports/bids_import.ttl')
+    import_files = None
+    #import_files = glob.glob(os.path.join(TERMS_FOLDER, "imports", '*.ttl'))
+    owlspec2 = OwlNidmHtml(owl_file, import_files, "BIDS", {}, used_by, generated_by, derived_from, prefix="http://purl.org/nidash/bids#")
+    
+    if not nidm_version == "dev":
+        owlspec2.text = owlspec.text.replace("(under development)", nidm_original_version)
+        owlspec2.text = owlspec.text.replace("img/", "img/nidm-results_"+nidm_version+"/") #where versions are included
+    
+    component_name = "bids"
+    owlspec2._header_footer(component=component_name, version=nidm_version)
+    owlspec2.write_specification(spec_file="bids.html", component=component_name, version=nidm_version)
+    
