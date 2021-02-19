@@ -102,7 +102,7 @@ class OwlNidmHtml:
             fname = os.path.join(
                 INCLUDE_FOLDER,
                 self.component+"_" +
-                subcomponent_name.split(" ")[0].lower()+".md")
+                subcomponent_name.split(" ")[0].lower()+".html")
             if os.path.isfile(fname):
                 fid = open(fname, "r")
                 self.text += fid.read()
@@ -517,7 +517,7 @@ class OwlNidmHtml:
             self.text += "\n"+tabs+"</section>\n"
     
     # Write out specification
-    def write_specification(self, spec_file="index.md", component=None,
+    def write_specification(self, spec_file="index.html", component=None,
                             version=None):
 
         spec_open = codecs.open(spec_file, 'w', "utf-8")
@@ -532,7 +532,17 @@ class OwlNidmHtml:
         release_notes = None
         
         if component:
-            if component_name == "nidm-experiment":
+            prev_file1 = os.path.join(INCLUDE_FOLDER, "head1.html")
+            if not os.path.isfile(prev_file1):
+                prev_file1 = os.path.join(INCLUDE_FOLDER, "head1.html")
+            prev_file2 = os.path.join(INCLUDE_FOLDER, "head2.html")
+            if not os.path.isfile(prev_file2):
+                prev_file2 = os.path.join(INCLUDE_FOLDER, "head2.html")
+            prev_file3 = os.path.join(INCLUDE_FOLDER, "head3.html")
+            if not os.path.isfile(prev_file3):
+                prev_file3 = os.path.join(INCLUDE_FOLDER, "head3.html")
+
+            if term == "nidm":
                 intro_file = os.path.join(INCLUDE_FOLDER, "intro.html")
                 if not os.path.isfile(intro_file):
                     intro_file = os.path.join(INCLUDE_FOLDER, "intro.html")
@@ -546,11 +556,25 @@ class OwlNidmHtml:
                 if not os.path.isfile(release_notes):
                     release_notes = None
 
+        
+        start_text = ""
+        if prev_file1 is not None:
+            prev_file_open1 = open(prev_file1, 'r')
+            start_text = start_text+prev_file_open1.read().decode('utf-8')
+            prev_file_open1.close()
         title = term.upper()
-        filename = None
-        if term == "nidm": filename = "index"
-        else: filename = term.lower()
-        start_text = "---\ntitle: "+title+"\nlayout: template\nfilename: "+filename+"\n---\n"
+        start_text = start_text+"<title>"+title+"</title>\n"
+        if prev_file2 is not None:
+            prev_file_open2 = open(prev_file2, 'r')
+            start_text = start_text+prev_file_open2.read().decode('utf-8')
+            prev_file_open2.close()
+        
+        project_name = "<h1 class=\"project-name\">"+title+"</h1>\n"
+        start_text = start_text+project_name
+        if prev_file3 is not None:
+            prev_file_open3 = open(prev_file3, 'r')
+            start_text = start_text+prev_file_open3.read().decode('utf-8')
+            prev_file_open3.close()
 
         if intro_file is not None:
             intro_file_open = open(intro_file, 'r')
@@ -605,9 +629,9 @@ class OwlNidmHtml:
 def owl_process(file, imports, spec_name, prefix, term_prefix):
     spec_file = None
     if term_prefix == "nidm":
-        spec_file = "index.md"
+        spec_file = "index.html"
     else:
-        spec_file = term_prefix+".md"
+        spec_file = term_prefix+".html"
 
     nidm_original_version = "dev"
     nidm_version = 'dev'
