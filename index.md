@@ -1,6 +1,9 @@
 ---
-layout: default
----    <section id='abstract'>
+title: NIDM
+layout: template
+filename: index
+---
+    <section id='abstract'>
         <p>
             This document provides an intuitive introduction to the NIDASH Data Model for neuroimaging data
             sharing. NIDASH defines a core vocabulary that extends the PROV Data Model for provenance with terms that

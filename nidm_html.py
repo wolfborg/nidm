@@ -102,7 +102,7 @@ class OwlNidmHtml:
             fname = os.path.join(
                 INCLUDE_FOLDER,
                 self.component+"_" +
-                subcomponent_name.split(" ")[0].lower()+".html")
+                subcomponent_name.split(" ")[0].lower()+".md")
             if os.path.isfile(fname):
                 fid = open(fname, "r")
                 self.text += fid.read()
@@ -517,7 +517,7 @@ class OwlNidmHtml:
             self.text += "\n"+tabs+"</section>\n"
     
     # Write out specification
-    def write_specification(self, spec_file="index.html", component=None,
+    def write_specification(self, spec_file="index.md", component=None,
                             version=None):
 
         spec_open = codecs.open(spec_file, 'w', "utf-8")
@@ -525,17 +525,13 @@ class OwlNidmHtml:
         spec_open.close()
 
     def _header_footer(self, prev_file=None, intro_file=None, follow_file=None, component=None,
-                       version=None):
+                       version=None, term=None):
 
         #print "into _header_footer"
 
         release_notes = None
         
         if component:
-            prev_file = os.path.join(INCLUDE_FOLDER, "head.html")
-            if not os.path.isfile(prev_file):
-                prev_file = os.path.join(INCLUDE_FOLDER, "head.html")
-            
             if component_name == "nidm-experiment":
                 intro_file = os.path.join(INCLUDE_FOLDER, "intro.html")
                 if not os.path.isfile(intro_file):
@@ -550,11 +546,11 @@ class OwlNidmHtml:
                 if not os.path.isfile(release_notes):
                     release_notes = None
 
-        start_text = ""
-        if prev_file is not None:
-            prev_file_open = open(prev_file, 'r')
-            start_text = start_text+prev_file_open.read().decode('utf-8')
-            prev_file_open.close()
+        title = term.upper()
+        filename = None
+        if term == "nidm": filename = "index"
+        else: filename = term.lower()
+        start_text = "---\ntitle: "+title+"\nlayout: template\nfilename: "+filename+"\n---\n"
 
         if intro_file is not None:
             intro_file_open = open(intro_file, 'r')
@@ -609,9 +605,9 @@ class OwlNidmHtml:
 def owl_process(file, imports, spec_name, prefix, term_prefix):
     spec_file = None
     if term_prefix == "nidm":
-        spec_file = "index.html"
+        spec_file = "index.md"
     else:
-        spec_file = term_prefix+".html"
+        spec_file = term_prefix+".md"
 
     nidm_original_version = "dev"
     nidm_version = 'dev'
@@ -620,15 +616,15 @@ def owl_process(file, imports, spec_name, prefix, term_prefix):
     generated_by = {}
     derived_from = {}
     subcomponents = {}
-    owlspec = OwlNidmHtml(file, imports, spec_name, prefix="http://purl.org/nidash/bids#", term_prefix="bids")
+    owlspec = OwlNidmHtml(file, imports, spec_name, prefix=prefix, term_prefix=term_prefix)
     
     if not nidm_version == "dev":
         owlspec.text = owlspec.text.replace("(under development)", nidm_original_version)
         owlspec.text = owlspec.text.replace("img/", "img/nidm-results_"+nidm_version+"/") #where versions are included
     
     component_name = spec_name.lower()
-    if term_prefix == "nidm":
-        owlspec._header_footer(component=component_name, version=nidm_version)
+    #if term_prefix == "nidm":
+    owlspec._header_footer(component=component_name, version=nidm_version, term=term_prefix)
     owlspec.write_specification(spec_file=spec_file, component=component_name, version=nidm_version)
 
 if __name__ == "__main__":
@@ -666,7 +662,7 @@ if __name__ == "__main__":
         owlspec.text = owlspec.text.replace("img/", "img/nidm-results_"+nidm_version+"/") #where versions are included
 
     component_name = "nidm-experiment"
-    owlspec._header_footer(component=component_name, version=nidm_version)
+    owlspec._header_footer(component=component_name, version=nidm_version, term="nidm")
     owlspec.write_specification(component=component_name, version=nidm_version)
 
     
