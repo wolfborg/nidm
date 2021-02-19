@@ -14,6 +14,7 @@
     <h1 class="project-name">NIDM</h1>
     <a href="index.html" class="btn">NIDM</a>
     <a href="bids.html" class="btn">BIDS</a>
+    <a href="dicom.html" class="btn">DICOM</a>
     <a href="https://github.com/wolfborg/nidm" class="btn">View on GitHub</a>
   </section>
 
@@ -158,7 +159,7 @@
             <section id="project">
                 <h1 label="Project">nidm:'Project'</h1>
                 <div class="glossary-ref">
-                    <a title="Project" href ="#project"><dfn title="Project" href ="#project">nidm:'Project'</dfn></a>: A project is a coordinated set of activities designed to generate data acquisition objects, with the ultimate goal of discovery or hypothesis testing.<p> <a title="Project" href ="#project">nidm:'Project'</a> is a prov:Activity and  has the following child: <a title="SIO_001000" href ="http://semanticscience.org/resource/SIO_001000">sio:'clinical trial'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
+                    <a title="Project" href ="#project"><dfn title="Project" href ="#project">nidm:'Project'</dfn></a>: A project is a coordinated set of activities designed to generate data acquisition objects, with the ultimate goal of discovery or hypothesis testing.<p> <a title="Project" href ="#project">nidm:'Project'</a> is a prov:Activity and  has the following child: <a title="SIO_001000" href ="#sio_001000">sio:'clinical trial'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
                 </div>
             </section>
             <!-- nidm:'Series' (Series) -->
@@ -207,7 +208,7 @@
             <section id="acquisitionobjectquality">
                 <h1 label="AcquisitionObjectQuality">nidm:'Acquisition Object Quality'</h1>
                 <div class="glossary-ref">
-                    <a title="AcquisitionObjectQuality" href ="#acquisitionobjectquality"><dfn title="AcquisitionObjectQuality" href ="#acquisitionobjectquality">nidm:'Acquisition Object Quality'</dfn></a>: An acquisition object quality is an quality that describes an essential feature of an object that is gathered from a subject during an acquisition activity.<p> <a title="AcquisitionObjectQuality" href ="#acquisitionobjectquality">nidm:'Acquisition Object Quality'</a> is a prov:'Entity' and  has the following children: <a title="AcquisitionMethod" href ="#acquisitionmethod">nidm:'Acquisition Method'</a>, <a title="AcquisitionModality" href ="#acquisitionmodality">nidm:'Acquisition Modality'</a>, <a title="AcquisitionUsageType" href ="#acquisitionusagetype">nidm:'Acquisition Usage Type'</a>, <a title="ImageContrastType" href ="#imagecontrasttype">nidm:'Image Contrast Type'</a>, <a title="ImageUsageType" href ="#imageusagetype">nidm:'Image Usage Type'</a>, <a title="InstrumentUsageType" href ="#instrumentusagetype">nidm:'Instrument Usage Type'</a>, <a title="NIDM_0000155" href ="#nidm_0000155">nidm:'fMRI Design Type'</a>, <a title="k-spaceTraversalScheme" href ="#k-spacetraversalscheme">nidm:'k-space Traversal Scheme'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
+                    <a title="AcquisitionObjectQuality" href ="#acquisitionobjectquality"><dfn title="AcquisitionObjectQuality" href ="#acquisitionobjectquality">nidm:'Acquisition Object Quality'</dfn></a>: An acquisition object quality is an quality that describes an essential feature of an object that is gathered from a subject during an acquisition activity.<p> <a title="AcquisitionObjectQuality" href ="#acquisitionobjectquality">nidm:'Acquisition Object Quality'</a> is a <a title="PATO_0000001" href ="#pato_0000001">obo:'quality'</a> and  has the following children: <a title="AcquisitionMethod" href ="#acquisitionmethod">nidm:'Acquisition Method'</a>, <a title="AcquisitionModality" href ="#acquisitionmodality">nidm:'Acquisition Modality'</a>, <a title="AcquisitionUsageType" href ="#acquisitionusagetype">nidm:'Acquisition Usage Type'</a>, <a title="ImageContrastType" href ="#imagecontrasttype">nidm:'Image Contrast Type'</a>, <a title="ImageUsageType" href ="#imageusagetype">nidm:'Image Usage Type'</a>, <a title="InstrumentUsageType" href ="#instrumentusagetype">nidm:'Instrument Usage Type'</a>, <a title="NIDM_0000155" href ="#nidm_0000155">nidm:'fMRI Design Type'</a>, <a title="k-spaceTraversalScheme" href ="#k-spacetraversalscheme">nidm:'k-space Traversal Scheme'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
                 </div>
             </section>
             <!-- nidm:'Acquisition Usage Type' (AcquisitionUsageType) -->
@@ -256,7 +257,7 @@
             <section id="auxiliaryfile">
                 <h1 label="AuxiliaryFile">nidm:'AuxiliaryFile'</h1>
                 <div class="glossary-ref">
-                    <a title="AuxiliaryFile" href ="#auxiliaryfile"><dfn title="AuxiliaryFile" href ="#auxiliaryfile">nidm:'AuxiliaryFile'</dfn></a>: An auxiliary file is an information-bearing object that is either used to inform the execution of an experiment or that is generated during the execution of the experiment.<p> <a title="AuxiliaryFile" href ="#auxiliaryfile">nidm:'AuxiliaryFile'</a> is a prov:'Entity' and  has the following children: <a title="StimulusPresentationFile" href ="#stimuluspresentationfile">nidm:'Stimulus Presentation File'</a>, <a title="StimulusResponseFile" href ="#stimulusresponsefile">nidm:'Stimulus Response File'</a>, <a title="b-ValueFile" href ="#b-valuefile">nidm:'b-value File'</a>, <a title="b-VectorFile" href ="#b-vectorfile">nidm:'b-vector File'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
+                    <a title="AuxiliaryFile" href ="#auxiliaryfile"><dfn title="AuxiliaryFile" href ="#auxiliaryfile">nidm:'AuxiliaryFile'</dfn></a>: An auxiliary file is an information-bearing object that is either used to inform the execution of an experiment or that is generated during the execution of the experiment.<p> <a title="AuxiliaryFile" href ="#auxiliaryfile">nidm:'AuxiliaryFile'</a> is a <a title="SIO_000396" href ="#sio_000396">sio:'file'</a> and  has the following children: <a title="StimulusPresentationFile" href ="#stimuluspresentationfile">nidm:'Stimulus Presentation File'</a>, <a title="StimulusResponseFile" href ="#stimulusresponsefile">nidm:'Stimulus Response File'</a>, <a title="b-ValueFile" href ="#b-valuefile">nidm:'b-value File'</a>, <a title="b-VectorFile" href ="#b-vectorfile">nidm:'b-vector File'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
                 </div>
             </section>
             <!-- nidm:'Auxiliary File Collection' (AuxiliaryFileCollection) -->
@@ -291,7 +292,7 @@
             <section id="calculatedparameter">
                 <h1 label="CalculatedParameter">nidm:'Calculated Parameter'</h1>
                 <div class="glossary-ref">
-                    <a title="CalculatedParameter" href ="#calculatedparameter"><dfn title="CalculatedParameter" href ="#calculatedparameter">nidm:'Calculated Parameter'</dfn></a>: A Calculated Parameter is a variable that is the result of the processing of a set of measurements.<p> <a title="CalculatedParameter" href ="#calculatedparameter">nidm:'Calculated Parameter'</a> is a prov:'Entity' and  has the following children: <a title="CerebralBloodFlow" href ="#cerebralbloodflow">nidm:'Cerebral Blood Flow'</a>, <a title="CerebralBloodVolume" href ="#cerebralbloodvolume">nidm:'Cerebral Blood Volume'</a>, <a title="Magnitude" href ="#magnitude">nidm:'Magnitude'</a>, <a title="Phase" href ="#phase">nidm:'Phase'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
+                    <a title="CalculatedParameter" href ="#calculatedparameter"><dfn title="CalculatedParameter" href ="#calculatedparameter">nidm:'Calculated Parameter'</dfn></a>: A Calculated Parameter is a variable that is the result of the processing of a set of measurements.<p> <a title="CalculatedParameter" href ="#calculatedparameter">nidm:'Calculated Parameter'</a> is a <a title="SIO_000367" href ="#sio_000367">sio:'variable'</a> and  has the following children: <a title="CerebralBloodFlow" href ="#cerebralbloodflow">nidm:'Cerebral Blood Flow'</a>, <a title="CerebralBloodVolume" href ="#cerebralbloodvolume">nidm:'Cerebral Blood Volume'</a>, <a title="Magnitude" href ="#magnitude">nidm:'Magnitude'</a>, <a title="Phase" href ="#phase">nidm:'Phase'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
                 </div>
             </section>
             <!-- nidm:'Cartesian' (Cartesian) -->
@@ -340,14 +341,14 @@
             <section id="dataacquisitiondevice">
                 <h1 label="DataAcquisitionDevice">nidm:'Data Acquisition Device'</h1>
                 <div class="glossary-ref">
-                    <a title="DataAcquisitionDevice" href ="#dataacquisitiondevice"><dfn title="DataAcquisitionDevice" href ="#dataacquisitiondevice">nidm:'Data Acquisition Device'</dfn></a>: A data acquisition device is a device that collects a packet or stream of analog or digital information from an entity.<p> <a title="DataAcquisitionDevice" href ="#dataacquisitiondevice">nidm:'Data Acquisition Device'</a> is a prov:'Entity' and  has the following children: <a title="Electrode" href ="#electrode">nidm:'Electrode'</a>, <a title="ElectroencephalographyAcquisitionDevice" href ="#electroencephalographyacquisitiondevice">nidm:'Electroencephalography Acquisition Device'</a>, <a title="EyeTrackingDevice" href ="#eyetrackingdevice">nidm:'Eye Tracking Device'</a>, <a title="HeartRateMonitor" href ="#heartratemonitor">nidm:'Heart Rate Monitor'</a>, <a title="ImageAcquisitionDevice" href ="#imageacquisitiondevice">nidm:'Image Acquisition Device'</a>, <a title="MagnetoencephalographyAcquisitionDevice" href ="#magnetoencephalographyacquisitiondevice">nidm:'Magnetoencephalography Acquisition Device'</a>, <a title="MultielectrodeArray" href ="#multielectrodearray">nidm:'Multi-electrode Array'</a>, <a title="NuclearMagneticResonanceDevice" href ="#nuclearmagneticresonancedevice">nidm:'Nuclear Magnetic Resonance Device'</a>, <a title="ReceiveCoil" href ="#receivecoil">nidm:'Receive Coil'</a>, <a title="RespirationRateMonitor" href ="#respirationratemonitor">nidm:'Respiration Rate Monitor'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
+                    <a title="DataAcquisitionDevice" href ="#dataacquisitiondevice"><dfn title="DataAcquisitionDevice" href ="#dataacquisitiondevice">nidm:'Data Acquisition Device'</dfn></a>: A data acquisition device is a device that collects a packet or stream of analog or digital information from an entity.<p> <a title="DataAcquisitionDevice" href ="#dataacquisitiondevice">nidm:'Data Acquisition Device'</a> is a <a title="SIO_000956" href ="#sio_000956">sio:'device'</a> and  has the following children: <a title="Electrode" href ="#electrode">nidm:'Electrode'</a>, <a title="ElectroencephalographyAcquisitionDevice" href ="#electroencephalographyacquisitiondevice">nidm:'Electroencephalography Acquisition Device'</a>, <a title="EyeTrackingDevice" href ="#eyetrackingdevice">nidm:'Eye Tracking Device'</a>, <a title="HeartRateMonitor" href ="#heartratemonitor">nidm:'Heart Rate Monitor'</a>, <a title="ImageAcquisitionDevice" href ="#imageacquisitiondevice">nidm:'Image Acquisition Device'</a>, <a title="MagnetoencephalographyAcquisitionDevice" href ="#magnetoencephalographyacquisitiondevice">nidm:'Magnetoencephalography Acquisition Device'</a>, <a title="MultielectrodeArray" href ="#multielectrodearray">nidm:'Multi-electrode Array'</a>, <a title="NuclearMagneticResonanceDevice" href ="#nuclearmagneticresonancedevice">nidm:'Nuclear Magnetic Resonance Device'</a>, <a title="ReceiveCoil" href ="#receivecoil">nidm:'Receive Coil'</a>, <a title="RespirationRateMonitor" href ="#respirationratemonitor">nidm:'Respiration Rate Monitor'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
                 </div>
             </section>
             <!-- nidm:'Data Processing Device' (DataProcessingDevice) -->
             <section id="dataprocessingdevice">
                 <h1 label="DataProcessingDevice">nidm:'Data Processing Device'</h1>
                 <div class="glossary-ref">
-                    <a title="DataProcessingDevice" href ="#dataprocessingdevice"><dfn title="DataProcessingDevice" href ="#dataprocessingdevice">nidm:'Data Processing Device'</dfn></a>: A data processing device is a device that manipulates a data packet, stream, or file by performing an operation on the data.<p> <a title="DataProcessingDevice" href ="#dataprocessingdevice">nidm:'Data Processing Device'</a> is a prov:'Entity' and  has the following children: <a title="Attenuator" href ="#attenuator">nidm:'Attenuator'</a>, <a title="CurrentAmplifier" href ="#currentamplifier">nidm:'Current Amplifier'</a>, <a title="VoltageAmplifier" href ="#voltageamplifier">nidm:'Voltage Amplifier'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
+                    <a title="DataProcessingDevice" href ="#dataprocessingdevice"><dfn title="DataProcessingDevice" href ="#dataprocessingdevice">nidm:'Data Processing Device'</dfn></a>: A data processing device is a device that manipulates a data packet, stream, or file by performing an operation on the data.<p> <a title="DataProcessingDevice" href ="#dataprocessingdevice">nidm:'Data Processing Device'</a> is a <a title="SIO_000956" href ="#sio_000956">sio:'device'</a> and  has the following children: <a title="Attenuator" href ="#attenuator">nidm:'Attenuator'</a>, <a title="CurrentAmplifier" href ="#currentamplifier">nidm:'Current Amplifier'</a>, <a title="VoltageAmplifier" href ="#voltageamplifier">nidm:'Voltage Amplifier'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
                 </div>
             </section>
             <!-- nidm:'Demographics Instrument' (DemographicsInstrument) -->
@@ -494,14 +495,14 @@
             <section id="gender">
                 <h1 label="Gender">nidm:'Gender'</h1>
                 <div class="glossary-ref">
-                    <a title="Gender" href ="#gender"><dfn title="Gender" href ="#gender">nidm:'Gender'</dfn></a>: Gender is a social entity that identifies which of either male or female that a person identifies as, which may be different from biological sex.<p> <a title="Gender" href ="#gender">nidm:'Gender'</a> is a prov:'Entity'.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
+                    <a title="Gender" href ="#gender"><dfn title="Gender" href ="#gender">nidm:'Gender'</dfn></a>: Gender is a social entity that identifies which of either male or female that a person identifies as, which may be different from biological sex.<p> <a title="Gender" href ="#gender">nidm:'Gender'</a> is a <a title="SIO_000009" href ="#sio_000009">sio:'social entity'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
                 </div>
             </section>
             <!-- nidm:'Group' (Group) -->
             <section id="group">
                 <h1 label="Group">nidm:'Group'</h1>
                 <div class="glossary-ref">
-                    <a title="Group" href ="#group"><dfn title="Group" href ="#group">nidm:'Group'</dfn></a>: A group is a collection of subjects or objects formed by the assignment of membership through the selection of one or more common characteristics.<p> <a title="Group" href ="#group">nidm:'Group'</a> is a prov:'Entity' and  has the following children: <a title="SIO_001068" href ="http://semanticscience.org/resource/SIO_001068">sio:'control group'</a>, <a title="SIO_001069" href ="http://semanticscience.org/resource/SIO_001069">sio:'intervention group'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
+                    <a title="Group" href ="#group"><dfn title="Group" href ="#group">nidm:'Group'</dfn></a>: A group is a collection of subjects or objects formed by the assignment of membership through the selection of one or more common characteristics.<p> <a title="Group" href ="#group">nidm:'Group'</a> is a prov:'Entity' and  has the following children: <a title="SIO_001068" href ="#sio_001068">sio:'control group'</a>, <a title="SIO_001069" href ="#sio_001069">sio:'intervention group'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
                 </div>
             </section>
             <!-- nidm:'Heart Rate Monitor' (HeartRateMonitor) -->
@@ -823,14 +824,14 @@
             <section id="signalfilter">
                 <h1 label="SignalFilter">nidm:'Signal Filter'</h1>
                 <div class="glossary-ref">
-                    <a title="SignalFilter" href ="#signalfilter"><dfn title="SignalFilter" href ="#signalfilter">nidm:'Signal Filter'</dfn></a>: A signal filter is a device that modifies or removes certain components of an electrical signal.<p> <a title="SignalFilter" href ="#signalfilter">nidm:'Signal Filter'</a> is a prov:'Entity' and  has the following children: <a title="BandpassFilter" href ="#bandpassfilter">nidm:'Bandpass Filter'</a>, <a title="HighPassFilter" href ="#highpassfilter">nidm:'High-Pass Filter'</a>, <a title="LowPassFilter" href ="#lowpassfilter">nidm:'Low-Pass Filter'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
+                    <a title="SignalFilter" href ="#signalfilter"><dfn title="SignalFilter" href ="#signalfilter">nidm:'Signal Filter'</dfn></a>: A signal filter is a device that modifies or removes certain components of an electrical signal.<p> <a title="SignalFilter" href ="#signalfilter">nidm:'Signal Filter'</a> is a <a title="SIO_000956" href ="#sio_000956">sio:'device'</a> and  has the following children: <a title="BandpassFilter" href ="#bandpassfilter">nidm:'Bandpass Filter'</a>, <a title="HighPassFilter" href ="#highpassfilter">nidm:'High-Pass Filter'</a>, <a title="LowPassFilter" href ="#lowpassfilter">nidm:'Low-Pass Filter'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
                 </div>
             </section>
             <!-- nidm:'Signal Generator' (SignalGenerator) -->
             <section id="signalgenerator">
                 <h1 label="SignalGenerator">nidm:'Signal Generator'</h1>
                 <div class="glossary-ref">
-                    <a title="SignalGenerator" href ="#signalgenerator"><dfn title="SignalGenerator" href ="#signalgenerator">nidm:'Signal Generator'</dfn></a>: A signal generator is a device that supplies an electrical voltage signal of a specified amplitude and shape.<p> <a title="SignalGenerator" href ="#signalgenerator">nidm:'Signal Generator'</a> is a prov:'Entity'.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
+                    <a title="SignalGenerator" href ="#signalgenerator"><dfn title="SignalGenerator" href ="#signalgenerator">nidm:'Signal Generator'</dfn></a>: A signal generator is a device that supplies an electrical voltage signal of a specified amplitude and shape.<p> <a title="SignalGenerator" href ="#signalgenerator">nidm:'Signal Generator'</a> is a <a title="SIO_000956" href ="#sio_000956">sio:'device'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
                 </div>
             </section>
             <!-- nidm:'Simultaneous Multislice Method' (SimultaneousMultisliceMethod) -->
@@ -886,14 +887,14 @@
             <section id="stimulusgenerator">
                 <h1 label="StimulusGenerator">nidm:'Stimulus Generator'</h1>
                 <div class="glossary-ref">
-                    <a title="StimulusGenerator" href ="#stimulusgenerator"><dfn title="StimulusGenerator" href ="#stimulusgenerator">nidm:'Stimulus Generator'</dfn></a>: A stimulus generator is a device that can deliver a current or voltage waveform that is used to stimulate a sample, cell, or body part.<p> <a title="StimulusGenerator" href ="#stimulusgenerator">nidm:'Stimulus Generator'</a> is a prov:'Entity'.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
+                    <a title="StimulusGenerator" href ="#stimulusgenerator"><dfn title="StimulusGenerator" href ="#stimulusgenerator">nidm:'Stimulus Generator'</dfn></a>: A stimulus generator is a device that can deliver a current or voltage waveform that is used to stimulate a sample, cell, or body part.<p> <a title="StimulusGenerator" href ="#stimulusgenerator">nidm:'Stimulus Generator'</a> is a <a title="SIO_000956" href ="#sio_000956">sio:'device'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
                 </div>
             </section>
             <!-- nidm:'Stimulus Isolator' (StimulusIsolator) -->
             <section id="stimulusisolator">
                 <h1 label="StimulusIsolator">nidm:'Stimulus Isolator'</h1>
                 <div class="glossary-ref">
-                    <a title="StimulusIsolator" href ="#stimulusisolator"><dfn title="StimulusIsolator" href ="#stimulusisolator">nidm:'Stimulus Isolator'</dfn></a>: A stimulus isolatator is a device that can deliver a current or voltage waveform that is used to stimulate a sample, cell, or body part, but is isolated from electrical ground, which both decreases the stimulus artifact in the acquired signal and increases the safety for the user.<p> <a title="StimulusIsolator" href ="#stimulusisolator">nidm:'Stimulus Isolator'</a> is a prov:'Entity'.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
+                    <a title="StimulusIsolator" href ="#stimulusisolator"><dfn title="StimulusIsolator" href ="#stimulusisolator">nidm:'Stimulus Isolator'</dfn></a>: A stimulus isolatator is a device that can deliver a current or voltage waveform that is used to stimulate a sample, cell, or body part, but is isolated from electrical ground, which both decreases the stimulus artifact in the acquired signal and increases the safety for the user.<p> <a title="StimulusIsolator" href ="#stimulusisolator">nidm:'Stimulus Isolator'</a> is a <a title="SIO_000956" href ="#sio_000956">sio:'device'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
                 </div>
             </section>
             <!-- nidm:'Stimulus Presentation File' (StimulusPresentationFile) -->
@@ -956,7 +957,7 @@
             <section id="transmitcoil">
                 <h1 label="TransmitCoil">nidm:'Transmit Coil'</h1>
                 <div class="glossary-ref">
-                    <a title="TransmitCoil" href ="#transmitcoil"><dfn title="TransmitCoil" href ="#transmitcoil">nidm:'Transmit Coil'</dfn></a>: A transmit coil is a data device used in nuclear magnetic resonance and magnetic resonance imaging to apply the stimulating energy to the sample. .<p> <a title="TransmitCoil" href ="#transmitcoil">nidm:'Transmit Coil'</a> is a prov:'Entity'.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
+                    <a title="TransmitCoil" href ="#transmitcoil"><dfn title="TransmitCoil" href ="#transmitcoil">nidm:'Transmit Coil'</dfn></a>: A transmit coil is a data device used in nuclear magnetic resonance and magnetic resonance imaging to apply the stimulating energy to the sample. .<p> <a title="TransmitCoil" href ="#transmitcoil">nidm:'Transmit Coil'</a> is a <a title="SIO_000956" href ="#sio_000956">sio:'device'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'requires discussion'</p>
                 </div>
             </section>
             <!-- nidm:'Voltage Amplifier' (VoltageAmplifier) -->
@@ -1016,9 +1017,7 @@
                 </div>
             </section>
 	</section>
-</section>
-
-<footer class="site-footer">
+</section><footer class="site-footer">
   <span class="site-footer-owner"><a href="https://github.com/wolfborg/nidm">NIDM</a> is maintained by <a href="https://github.com/wolfborg">wolfborg</a>.</span>
 
   <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>

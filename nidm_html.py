@@ -44,7 +44,6 @@ class OwlNidmHtml:
         self.classes = self.split_process(owl_file)
 
         self.attributes_done = set()
-        #self.text = "--- layout: default ---\n"
         self.text = ""
         self.create_specification(subcomponents, used_by, generated_by,
                                   derived_from, attributed_to, prefix, intro)
@@ -63,8 +62,8 @@ class OwlNidmHtml:
         #print("CLASS: "+classes)
         classes_by_types = self.owl.get_class_names_by_prov_type(
             classes, prefix=prefix, but=self.already_defined_classes)
-        for x in classes:
-            print(x)
+        # for x in classes:
+        #     print(x)
         self.already_defined_classes += classes
 
         #self.create_subcomponent_table(classes_by_types, table_num,
@@ -589,6 +588,8 @@ class OwlNidmHtml:
             release_note_open.close()
 
         if follow_file is not None:
+            if term is "nidm":
+                self.text = self.text+"</section>"
             follow_file_open = open(follow_file, 'r')
             self.text = self.text+follow_file_open.read()
             follow_file_open.close()
@@ -704,4 +705,7 @@ if __name__ == "__main__":
     # owlspec2._header_footer(component=component_name, version=nidm_version)
     # owlspec2.write_specification(spec_file="bids.html", component=component_name, version=nidm_version)
     owl_process(owl_file, None, "BIDS", prefix=str(BIDS), term_prefix="bids")
+
+    owl_file = os.path.join(TERMS_FOLDER, 'imports/dicom_import.ttl')
+    owl_process(owl_file, None, "DICOM", prefix=str(DICOM), term_prefix="dicom")
     
