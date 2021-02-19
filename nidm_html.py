@@ -537,9 +537,9 @@ class OwlNidmHtml:
                 if not os.path.isfile(intro_file):
                     intro_file = os.path.join(INCLUDE_FOLDER, "intro.html")
 
-            # follow_file = os.path.join(INCLUDE_FOLDER, "foot.html")
-            # if not os.path.isfile(follow_file):
-            #     follow_file = os.path.join(INCLUDE_FOLDER, "foot.html")
+            follow_file = os.path.join(INCLUDE_FOLDER, "foot.html")
+            if not os.path.isfile(follow_file):
+                follow_file = os.path.join(INCLUDE_FOLDER, "foot.html")
 
             if version:
                 release_notes = os.path.join(os.path.dirname(self.owl.file), "notes.html")
@@ -564,10 +564,10 @@ class OwlNidmHtml:
             self.text = self.text+release_note_open.read()
             release_note_open.close()
 
-        # if follow_file is not None:
-        #     follow_file_open = open(follow_file, 'r')
-        #     self.text = self.text+follow_file_open.read()
-        #     follow_file_open.close()
+        if follow_file is not None:
+            follow_file_open = open(follow_file, 'r')
+            self.text = self.text+follow_file_open.read()
+            follow_file_open.close()
 
     def split_process(self, owl_file):
         f = open(owl_file, "r")
