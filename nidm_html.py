@@ -6,6 +6,7 @@ import glob
 from nidmresults.owl.owl_reader import OwlReader
 from nidmresults.objects.constants_rdflib import *
 import markdown2
+import shlex
 
 RELPATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -23,7 +24,7 @@ class OwlNidmHtml:
     def __init__(self, owl_file, import_files, spec_name, subcomponents=None,
                  used_by=None, generated_by=None, derived_from=None,
                  attributed_to=None, prefix=None, commentable=False,
-                 intro=None):
+                 intro=None, term_prefix=None):
         self.owl = OwlReader(owl_file, import_files)
         self.owl.graph.bind('dct', 'http://purl.org/dc/terms/')
         self.owl.graph.bind('dicom', 'http://purl.org/nidash/dicom#')
@@ -39,6 +40,8 @@ class OwlNidmHtml:
         self.section_open = 0
         self.already_defined_classes = list()
         self.commentable = commentable
+        self.term_prefix = term_prefix
+        self.classes = self.split_process(owl_file)
 
         self.attributes_done = set()
         #self.text = "--- layout: default ---\n"
@@ -54,34 +57,41 @@ class OwlNidmHtml:
             self.text += intro
 
         #table_num = 3
-        for subcomponent_name, classes in subcomponents.items():
-            classes_by_types = self.owl.get_class_names_by_prov_type(
-                classes, prefix=prefix, but=self.already_defined_classes)
-            self.already_defined_classes += classes
+        #if self.term_prefix == "nidm":
+        classes = self.owl.get_classes(prefix=prefix, but=self.already_defined_classes)
+        #for classes in self.classes:
+        #print("CLASS: "+classes)
+        classes_by_types = self.owl.get_class_names_by_prov_type(
+            classes, prefix=prefix, but=self.already_defined_classes)
+        for x in classes:
+            print(x)
+        self.already_defined_classes += classes
 
-            #self.create_subcomponent_table(classes_by_types, table_num,
-            #                               subcomponent_name)
-            #table_num = table_num + 1
-            all_classes = \
-                classes_by_types[PROV['Activity']] + \
-                classes_by_types[PROV['Entity']] + \
-                classes_by_types[PROV['Agent']] + \
-                classes_by_types[None]
+        #self.create_subcomponent_table(classes_by_types, table_num,
+        #                               subcomponent_name)
+        #table_num = table_num + 1
+        all_classes = \
+            classes_by_types[PROV['Activity']] + \
+            classes_by_types[PROV['Entity']] + \
+            classes_by_types[PROV['Agent']] + \
+            classes_by_types[None]
 
-            for class_uri in all_classes:
-                self.create_class_section(
-                    class_uri,
-                    self.owl.get_definition(class_uri),
-                    self.owl.attributes.setdefault(class_uri, None),
-                    used_by, generated_by, derived_from, attributed_to,
-                    children=not (
-                        self.owl.get_prov_class(class_uri) == PROV['Entity']))
+        for class_uri in all_classes:
+            self.create_class_section(
+                class_uri,
+                self.owl.get_definition(class_uri),
+                self.owl.attributes.setdefault(class_uri, None),
+                used_by, generated_by, derived_from, attributed_to,
+                children=not (
+                    self.owl.get_prov_class(class_uri) == PROV['Entity']))
 
-            #if subcomponent_name:
-            #    self.text += """
-            #</section>"""
+        #if subcomponent_name:
+        #    self.text += """
+        #</section>"""
+
 
         self.close_sections()
+    
     
     def create_subcomponent_table(self, classes, table_num,
                                   subcomponent_name=None):
@@ -249,7 +259,7 @@ class OwlNidmHtml:
         class_name = self.owl.get_name(class_uri)
         definition = self.format_definition(definition)
         
-        if (not self.owl.get_label(class_uri).startswith(self.name.lower()+':')):
+        if (not self.owl.get_label(class_uri).startswith(self.term_prefix.lower()+':')):
             return
             
         self.text += """
@@ -358,7 +368,10 @@ class OwlNidmHtml:
             editor = ""
 
         if indiv_type:
-            self.text += "<p>Type: "+self.owl.get_name(indiv_type)+"</p>"
+            try:
+                self.text += "<p>Type: "+self.owl.get_name(indiv_type)+"</p>"
+            except:
+                print("URI invalid for: "+class_uri)
         if range_value:
             self.text += "<p>Range: "+range_value+"</p>"
         if domain:
@@ -560,6 +573,63 @@ class OwlNidmHtml:
             self.text = self.text+follow_file_open.read()
             follow_file_open.close()
 
+    def split_process(self, owl_file):
+        f = open(owl_file, "r")
+        lines = f.readlines()
+        f.close()
+        
+        classes = []
+        subject = ""
+        for x in lines:
+            #print(x)
+            x = x.strip()
+            if x != "" and x[0] != "#" and x[0] != "@" and x[0] != "[":
+                #print(x)
+                x = shlex.split(x)
+                if x[0] == "owl:imports":
+                    continue
+                if len(x)<3:
+                    end = x[-1]
+                    if end == ".":
+                        subject = ""
+                    continue
+                
+                if subject == "":
+                    subject = x[0]
+                    if subject not in classes:
+                        #print("CLASS: "+subject)
+                        classes.append(subject)
+
+                end = x[-1]
+                if end == ".":
+                    subject = ""
+
+        return classes
+
+def owl_process(file, imports, spec_name, prefix, term_prefix):
+    spec_file = None
+    if term_prefix == "nidm":
+        spec_file = "index.html"
+    else:
+        spec_file = term_prefix+".html"
+
+    nidm_original_version = "dev"
+    nidm_version = 'dev'
+
+    used_by = {}
+    generated_by = {}
+    derived_from = {}
+    subcomponents = {}
+    owlspec = OwlNidmHtml(file, imports, spec_name, prefix="http://purl.org/nidash/bids#", term_prefix="bids")
+    
+    if not nidm_version == "dev":
+        owlspec.text = owlspec.text.replace("(under development)", nidm_original_version)
+        owlspec.text = owlspec.text.replace("img/", "img/nidm-results_"+nidm_version+"/") #where versions are included
+    
+    component_name = spec_name.lower()
+    if term_prefix == "nidm":
+        owlspec._header_footer(component=component_name, version=nidm_version)
+    owlspec.write_specification(spec_file=spec_file, component=component_name, version=nidm_version)
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
@@ -582,91 +652,14 @@ if __name__ == "__main__":
     # check the file exists
     assert os.path.exists(owl_file)
 
-    subcomponents =  collections.OrderedDict()
-
-    subcomponents['Project'] = [
-        NIDM['CoInvestigator'], NIDM['Gender'], NIDM['Group'], NIDM['ModelDesigner'], 
-        NIDM['ModelSpecification'], NIDM['PrincipalInvestigator'], NIDM['Project'],
-        NIDM['Protocol'], NIDM['ResearchAssistant'], NIDM['SpecifiedPlan'], NIDM['Subject']
-    ]
-    subcomponents['Acquisition'] = [
-        NIDM['Acquisition'], NIDM['AcquisitionDeviceOperator'], NIDM['AcquisitionMethod'],
-        NIDM['AcquisitionModality'], NIDM['AcquisitionObject'], NIDM['AcquisitionObjectQuality'],
-        NIDM['AcquisitionUsageType'], NIDM['AuxiliaryFile'], NIDM['AuxiliaryFileCollection'],
-        NIDM['CalculatedParameter'], NIDM['Magnitude'], NIDM['PerformedPlan'], NIDM['Phase'],
-        NIDM['PresentationSoftware'], NIDM['ProcessedAcquisitionObject'], NIDM['RawAcquisitionObject'],
-        NIDM['ReconstructedAcquisitionObject'], NIDM['Series'], NIDM['Session'], NIDM['SessionObject'],
-        NIDM['StimulusPresentationFile'], NIDM['StimulusResponseFile'], NIDM['Task']
-    ]
-    subcomponents['Assessment Instrument'] = [
-        NIDM['BehavioralInstrument'],  NIDM['DemographicsInstrument'],
-        NIDM['InformedConsentInstrument'], NIDM['InstrumentAdministrator'], NIDM['InstrumentUsageType']
-    ]
-    subcomponents['Magnetic Resonance Imaging'] = [
-        NIDM['Anatomical'], NIDM['Angiography'], NIDM['ArterialSpinLabeling'], NIDM['BloodOxygenLevelDependent'], 
-        NIDM['Cartesian'], NIDM['CerebralBloodFlow'], NIDM['CerebralBloodVolume'], 
-        NIDM['DICOMTagCollection'], NIDM['DiffusionTensor'],NIDM['DiffusionWeighted'], 
-        NIDM['DynamicContrastEnhanced'], NIDM['DynamicSusceptibilityContrast'],
-        NIDM['EchoPlanar'], NIDM['FlowWeighted'],NIDM['FluidAttenuatedInversionRecovery'], 
-        NIDM['Functional'], NIDM['ImageContrastType'],
-        NIDM['ImageDataReconstruction'], NIDM['ImageUsageType'], NIDM['Inside-outSpiral'], 
-        NIDM['MagneticResonanceImaging'], NIDM['MagneticResonanceImagingScanner'], 
-        NIDM['NuclearMagneticResonanceSpectroscopy'],
-        NIDM['NuclearMagneticResonanceSpectroscopicImaging'],NIDM['Outside-inSpiral'], NIDM['ParallelImaging'], 
-        NIDM['ProtonDensityWeighted'],NIDM['PulseSequence'],NIDM['QuantitativeSusceptibilityMapping'],
-        NIDM['Rectilinear'],NIDM['SimultaneousMultisliceMethod'], NIDM['SteadyStateFreePrecession'], NIDM['Structural'], 
-        NIDM['SusceptibilityWeighted'],NIDM['SusceptibilityWeightedImaging'],
-        NIDM['T1Weighted'], NIDM['T2StarWeighted'], NIDM['T2Weighted'],NIDM['b-ValueFile'],
-        NIDM['b-VectorFile'], NIDM['k-spaceTraversalScheme'], NIDM['NIDM_0000152'], NIDM['NIDM_0000153'],
-        NIDM['NIDM_0000154'], NIDM['NIDM_0000155']
-    ]
-    subcomponents['Electrophysiology'] = [
-        NIDM['Amperometry'],  NIDM['CurrentClamp'], 
-        NIDM['Electrocorticography'], NIDM['ElectrophysiologyRecording'],
-        NIDM['ExtracellularElectrophysiologyRecording'],NIDM['FieldPotential'],
-        NIDM['IntracellularElectrophysiologyRecording'],
-        NIDM['MultiUnitReccording'],  NIDM['SharpElectrode'], NIDM['SingleUnitReccording'], 
-        NIDM['PatchClamp'], NIDM['VoltageClamp']
-    ]
-    subcomponents['Devices'] = [
-        NIDM['Attenuator'], NIDM['BandpassFilter'], NIDM['CurrentAmplifier'],
-        NIDM['DataAcquisitionDevice'], NIDM['DataProcessingDevice'], NIDM['Electrode'],
-        NIDM['ElectroencephalographyAcquisitionDevice'], NIDM['EyeTrackingDevice'],
-        NIDM['HeartRateMonitor'], NIDM['HighPassFilter'], NIDM['ImageAcquisitionDevice'],
-        NIDM['LowPassFilter'], NIDM['MultielectrodeArray'], NIDM['ReceiveCoil'], 
-        NIDM['RespirationRateMonitor'], NIDM['SignalFilter'], NIDM['SignalGenerator'],
-        NIDM['StimulusGenerator'], NIDM['StimulusIsolator'], NIDM['TransmitCoil'],
-        NIDM['VoltageAmplifier']
-    ]
-    subcomponents['Positron Emission Tomography'] = [
-        NIDM['PositronEmissionTomography'],
-        NIDM['PositronEmissionTomographyScanner']
-    ]
-    subcomponents['X-ray Computed Tomography'] = [
-        NIDM['X-rayComputedTomography'],
-        NIDM['X-rayComputedTomographyAcquisitionDevice']
-    ]
-    subcomponents['Magnetoencephalography'] = [
-        NIDM['Magnetoencephalography'],
-        NIDM['MagnetoencephalographyAcquisitionDevice'],
-        NIDM['NoiseMeasurement'] 
-    ]
-    subcomponents['Electroencephalography'] = [
-        NIDM['Electroencephalography'],
-        NIDM['ElectroencephalographyAcquisitionDevice']
-    ]
-    subcomponents['SinglePhotonEmissionComputedTomography'] = [
-        NIDM['SinglePhotonEmissionComputedTomography'],
-        NIDM['SinglePhotonEmissionComputedTomographyScanner']
-    ]
-
     # Add manually used and wasDerivedFrom because these are not stored in the
     # owl file (no relations yet!)
+    subcomponents = {}
     used_by = {}
     generated_by = {}
     derived_from = {}
 
-    owlspec = OwlNidmHtml(owl_file, import_files, "NIDM-Experiment", subcomponents, used_by, generated_by, derived_from, prefix=str(NIDM))
+    owlspec = OwlNidmHtml(owl_file, import_files, "NIDM-Experiment", subcomponents, used_by, generated_by, derived_from, prefix=str(NIDM), term_prefix="nidm")
     
     if not nidm_version == "dev":
         owlspec.text = owlspec.text.replace("(under development)", nidm_original_version)
@@ -677,17 +670,18 @@ if __name__ == "__main__":
     owlspec.write_specification(component=component_name, version=nidm_version)
 
     
-    # BIDS
+    # # BIDS
     owl_file = os.path.join(TERMS_FOLDER, 'imports/bids_import.ttl')
-    import_files = None
-    #import_files = glob.glob(os.path.join(TERMS_FOLDER, "imports", '*.ttl'))
-    owlspec2 = OwlNidmHtml(owl_file, import_files, "BIDS", {}, used_by, generated_by, derived_from, prefix="http://purl.org/nidash/bids#")
+    # import_files = None
+    # #import_files = glob.glob(os.path.join(TERMS_FOLDER, "imports", '*.ttl'))
+    # owlspec2 = OwlNidmHtml(owl_file, import_files, "BIDS", {}, used_by, generated_by, derived_from, prefix=str(BIDS), term_prefix="bids")
     
-    if not nidm_version == "dev":
-        owlspec2.text = owlspec.text.replace("(under development)", nidm_original_version)
-        owlspec2.text = owlspec.text.replace("img/", "img/nidm-results_"+nidm_version+"/") #where versions are included
+    # if not nidm_version == "dev":
+    #     owlspec2.text = owlspec.text.replace("(under development)", nidm_original_version)
+    #     owlspec2.text = owlspec.text.replace("img/", "img/nidm-results_"+nidm_version+"/") #where versions are included
     
-    component_name = "bids"
-    owlspec2._header_footer(component=component_name, version=nidm_version)
-    owlspec2.write_specification(spec_file="bids.html", component=component_name, version=nidm_version)
+    # component_name = "bids"
+    # owlspec2._header_footer(component=component_name, version=nidm_version)
+    # owlspec2.write_specification(spec_file="bids.html", component=component_name, version=nidm_version)
+    owl_process(owl_file, None, "BIDS", prefix=str(BIDS), term_prefix="bids")
     
