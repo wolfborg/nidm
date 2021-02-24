@@ -614,30 +614,16 @@ class OwlNidmHtml:
         f.close()
         
         classes = []
-        subject = ""
         for x in lines:
-            #print(x)
             x = x.strip()
             if x != "" and x[0] != "#" and x[0] != "@" and x[0] != "[":
-                #print(x)
+                if "owl:Class" not in x:
+                    continue
+                print(x)
                 x = shlex.split(x)
-                if x[0] == "owl:imports":
-                    continue
-                if len(x)<3:
-                    end = x[-1]
-                    if end == ".":
-                        subject = ""
-                    continue
-                
-                if subject == "":
-                    subject = x[0]
-                    if subject not in classes:
-                        #print("CLASS: "+subject)
-                        classes.append(subject)
-
-                end = x[-1]
-                if end == ".":
-                    subject = ""
+                subject = x[0]
+                if subject not in classes:
+                    classes.append(subject)
 
         return classes
 
