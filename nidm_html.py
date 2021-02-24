@@ -7,6 +7,8 @@ from nidmresults.owl.owl_reader import OwlReader
 from nidmresults.objects.constants_rdflib import *
 import markdown2
 import shlex
+import warnings
+import cgi
 
 RELPATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -42,6 +44,7 @@ class OwlNidmHtml:
         self.commentable = commentable
         self.term_prefix = term_prefix
         self.classes = self.split_process(owl_file)
+        self.prefix = prefix
 
         self.attributes_done = set()
         self.text = ""
@@ -227,7 +230,14 @@ class OwlNidmHtml:
         if self.owl.is_external_namespace(term_uri):
             href = " href =\""+str(term_uri)+"\""
         else: #target link fix
-            href = " href =\"#"+self.owl.get_name(term_uri).lower()+"\""
+            term_uri_prefix = self.owl.get_label(term_uri).split(":")[0]
+            if term_uri.startswith(self.prefix):
+                href = " href =\"#"+self.owl.get_name(term_uri).lower()+"\""
+            else:
+                html_file = term_uri_prefix+".html"
+                if term_uri_prefix == "nidm":
+                    html_file = "index.html"
+                href = " href =\"./"+html_file+"#"+self.owl.get_name(term_uri).lower()+"\""
         
         if text is None:
             text = self.owl.get_label(term_uri)
@@ -272,10 +282,12 @@ class OwlNidmHtml:
 
         nidm_class = self.owl.get_nidm_parent(class_uri)
         if nidm_class:
+            #print(self.term_prefix+"-n: "+nidm_class)
             self.text += " a "+self.term_link(nidm_class)
         else:
             prov_class = self.owl.get_prov_class(class_uri)
             if prov_class:
+                #print(self.term_prefix+": "+prov_class)
                 self.text += " a "+self.owl.get_label(prov_class)
 
         found_used_by = False
@@ -562,6 +574,8 @@ class OwlNidmHtml:
             start_text = start_text+prev_file_open1.read().decode('utf-8')
             prev_file_open1.close()
         title = term.upper()
+        if title == "NIDM":
+            title = "NIDM-Experiment"
         start_text = start_text+"<title>"+title+"</title>\n"
         if prev_file2 is not None:
             prev_file_open2 = open(prev_file2, 'r')
@@ -708,4 +722,9 @@ if __name__ == "__main__":
 
     owl_file = os.path.join(TERMS_FOLDER, 'imports/dicom_import.ttl')
     owl_process(owl_file, None, "DICOM", prefix=str(DICOM), term_prefix="dicom")
+
+    owl_file = os.path.join(TERMS_FOLDER, 'imports/sio_import.ttl')
+    owl_process(owl_file, None, "SIO", prefix=str(SIO), term_prefix="sio")
     
+    owl_file = os.path.join(TERMS_FOLDER, 'imports/obo_import.ttl')
+    owl_process(owl_file, None, "OBO", prefix=str(OBO), term_prefix="obo")

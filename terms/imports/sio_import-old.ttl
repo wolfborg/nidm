@@ -12,6 +12,68 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @base <http://purl.org/nidash/nidm/sio_import.owl> .
 
+<http://purl.org/nidash/nidm/sio_import.owl> rdf:type ns2:Ontology ;
+                                              
+                                              ns0:license "http://creativecommons.org/licenses/by/4.0/"^^ns5:anyURI ;
+                                              
+                                              ns1:defaultLanguage "en" ;
+                                              
+                                              ns2:versionInfo "1.0.13" ;
+                                              
+                                              ns0:contributor """Contributors are those that engage in discussions in the context of SIO (in alphabetical order):
+christopher baker
+joachim baran
+jerven bolleman
+alison callahan
+leonid chepelev
+kevin cohen
+melanie courtot
+geraint duck
+laura furlong
+luke mccarthy
+jim mccusker
+jose miguel cruz-toledo
+robert hoehndorf
+simon jupp
+jin-dong kim
+dana klassen
+james malone
+chris mungall
+david osumi-sutherland
+nuria queralt
+alexandre riazanov
+matthias samwald
+robert stevens
+mark wilkinson
+karin verspoor
+natalia villanueva-rosales"""@en ;
+                                              
+                                              ns0:creator "Michel Dumontier"@en ;
+                                              
+                                              ns0:title "Semanticscience Integrated Ontology (SIO)"@en ;
+                                              
+                                              ns0:description """The semanticscience integrated ontology (SIO) provides a simple, integrated ontology (types, relations) for objects, processes and their attributes.
+
+This project provides foundational support for the Bio2RDF (http://bio2rdf.org) and SADI (http://sadiframework.org) projects. 
+
+website: http://semanticscience.org
+email: sio-ontology@googlegroups.com
+mailing list: http://groups.google.com/group/sio-ontology
+"""@en ;
+                                              
+                                              ns0:identifier "sio.owl" ;
+                                              
+                                              ns0:rights "free to use,share,modify. modify with attribution [http://creativecommons.org/licenses/by/4.0/]." ;
+                                              
+                                              ns3:comment """general class inclusion axioms:
+'is part of' some 'physical entity' subClassOf 'is located in' some 'physical entity'
+
+role chains:
+'has capability' o 'is realized in' -> 'is participant in'"""@en ;
+                                              
+                                              ns2:versionIRI <http://semanticscience.org/ontology/sio-v1.0.13-release.owl> ;
+                                              
+                                              ns3:isDefinedBy <http://semanticscience.org/ontology/sio.owl> .
 
 
 #################################################################

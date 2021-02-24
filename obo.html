@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>OBO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheet/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheet/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheet/github-light.css" media="screen">
+  </head>
+  <body>
+  <section class="page-header">
+    <h1 class="project-name">OBO</h1>
+    <a href="index.html" class="btn">NIDM-E</a>
+    <a href="bids.html" class="btn">BIDS</a>
+    <a href="dicom.html" class="btn">DICOM</a>
+    <a href="sio.html" class="btn">SIO</a>
+    <a href="obo.html" class="btn">OBO</a>
+    <a href="https://github.com/wolfborg/nidm" class="btn">View on GitHub</a>
+  </section>
+
+  <section class="main-content">
+
+        <section id="definitions">
+        
+            <h1>OBO: Types and relations</h1>
+        
+            <!-- obo:'acquisition computer' (OBI_0000636) -->
+            <section id="obi_0000636">
+                <h1 label="OBI_0000636">obo:'acquisition computer'</h1>
+                <div class="glossary-ref">
+                    <a title="OBI_0000636" href ="#obi_0000636"><dfn title="OBI_0000636" href ="#obi_0000636">obo:'acquisition computer'</dfn></a>: A Computer used for NMR, can be divided into central processing unit (CPU), consisting of instruction, interpretation and arithmetic unit plus fast access memory, and peripheral devices such as bulk data storage and input and output devices (including, via the interface, the spectrometer). Under software control, the computer controls the RF pulses and gradients necessary to acquire data, and process the data to produce spectra or images. Note that devices such as the spectrometer may themselves incorporate small computers.<p> <a title="OBI_0000636" href ="#obi_0000636">obo:'acquisition computer'</a> is a <a title="OBI_0400107" href ="#obi_0400107">obo:'computer'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'metadata complete'</p><p>Editor: PERSON:Daniel Schober</p>
+                </div>
+            </section>
+            <!-- obo:'computer cluster' (OBI_0001092) -->
+            <section id="obi_0001092">
+                <h1 label="OBI_0001092">obo:'computer cluster'</h1>
+                <div class="glossary-ref">
+                    <a title="OBI_0001092" href ="#obi_0001092"><dfn title="OBI_0001092" href ="#obi_0001092">obo:'computer cluster'</dfn></a>: A group of linked computers, working together closely so that in many respects they form a single computer.<p> <a title="OBI_0001092" href ="#obi_0001092">obo:'computer cluster'</a> is a <a title="OBI_0400107" href ="#obi_0400107">obo:'computer'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'metadata complete'</p><p>Editor: PERSON: Erik Segerdell</p>
+                </div>
+            </section>
+            <!-- obo:'chemical solution' (OBI_0302729) -->
+            <section id="obi_0302729">
+                <h1 label="OBI_0302729">obo:'chemical solution'</h1>
+                <div class="glossary-ref">
+                    <a title="OBI_0302729" href ="#obi_0302729"><dfn title="OBI_0302729" href ="#obi_0302729">obo:'chemical solution'</dfn></a>: A material entity  that is made up of at least 2 scattered molecular aggregates, one playing the role of solvent and the other one playing the role of solute.<p> <a title="OBI_0302729" href ="#obi_0302729">obo:'chemical solution'</a> is a <a title="SIO_010004" href ="./sio.html#sio_010004">sio:SIO_010004</a>.</p><p>Type: Class</p><p>Curation Status: obo:'ready for release'</p><p>Editor: PERSON: Bjoern Peters</p>
+                </div>
+            </section>
+            <!-- obo:'computer' (OBI_0400107) -->
+            <section id="obi_0400107">
+                <h1 label="OBI_0400107">obo:'computer'</h1>
+                <div class="glossary-ref">
+                    <a title="OBI_0400107" href ="#obi_0400107"><dfn title="OBI_0400107" href ="#obi_0400107">obo:'computer'</dfn></a>: A computer is an instrument which manipulates (stores, retrieves, and processes) data according to a list of instructions.<p> <a title="OBI_0400107" href ="#obi_0400107">obo:'computer'</a> is and  has the following children: <a title="OBI_0000636" href ="#obi_0000636">obo:'acquisition computer'</a>, <a title="OBI_0001092" href ="#obi_0001092">obo:'computer cluster'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'ready for release'</p><p>Editor: Trish Whetzel</p>
+                </div>
+                </ul>
+                </div>
+                <pre class='example highlight' title="">Apple PowerBook, Dell OptiPlex</pre>
+            </section>
+            <!-- obo:'quality' (PATO_0000001) -->
+            <section id="pato_0000001">
+                <h1 label="PATO_0000001">obo:'quality'</h1>
+                <div class="glossary-ref">
+                    <a title="PATO_0000001" href ="#pato_0000001"><dfn title="PATO_0000001" href ="#pato_0000001">obo:'quality'</dfn></a>: A dependent entity that inheres in a bearer by virtue of how the bearer is related to other entities.<p> <a title="PATO_0000001" href ="#pato_0000001">obo:'quality'</a> is and  has the following child: <a title="PATO_0001241" href ="#pato_0001241">obo:'physical object quality'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'uncurated'</p>
+                </div>
+            </section>
+            <!-- obo:'biological sex' (PATO_0000047) -->
+            <section id="pato_0000047">
+                <h1 label="PATO_0000047">obo:'biological sex'</h1>
+                <div class="glossary-ref">
+                    <a title="PATO_0000047" href ="#pato_0000047"><dfn title="PATO_0000047" href ="#pato_0000047">obo:'biological sex'</dfn></a>: An organismal quality inhering in a bearer by virtue of the bearer's ability to undergo sexual reproduction in order to differentiate the individuals or types involved.<p> <a title="PATO_0000047" href ="#pato_0000047">obo:'biological sex'</a> is a <a title="PATO_0001995" href ="#pato_0001995">obo:'organismal quality'</a> and  has the following child: <a title="PATO_0001894" href ="#pato_0001894">obo:'phenotypic sex'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'uncurated'</p>
+                </div>
+            </section>
+            <!-- obo:'behavioral quality' (PATO_0000186) -->
+            <section id="pato_0000186">
+                <h1 label="PATO_0000186">obo:'behavioral quality'</h1>
+                <div class="glossary-ref">
+                    <a title="PATO_0000186" href ="#pato_0000186"><dfn title="PATO_0000186" href ="#pato_0000186">obo:'behavioral quality'</dfn></a>: An organismal quality inhering in a bearer by virtue of the bearer's behavior aggregate of the responses or reactions or movements in a given situation.<p> <a title="PATO_0000186" href ="#pato_0000186">obo:'behavioral quality'</a> is a <a title="PATO_0001995" href ="#pato_0001995">obo:'organismal quality'</a> and  has the following child: <a title="PATO_0002201" href ="#pato_0002201">obo:'handedness'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'uncurated'</p>
+                </div>
+            </section>
+            <!-- obo:'female' (PATO_0000383) -->
+            <section id="pato_0000383">
+                <h1 label="PATO_0000383">obo:'female'</h1>
+                <div class="glossary-ref">
+                    <a title="PATO_0000383" href ="#pato_0000383"><dfn title="PATO_0000383" href ="#pato_0000383">obo:'female'</dfn></a>: A biological sex quality inhering in an individual or a population that only produces gametes that can be fertilised by male gametes.<p> <a title="PATO_0000383" href ="#pato_0000383">obo:'female'</a> is a <a title="PATO_0001894" href ="#pato_0001894">obo:'phenotypic sex'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'uncurated'</p>
+                </div>
+            </section>
+            <!-- obo:'male' (PATO_0000384) -->
+            <section id="pato_0000384">
+                <h1 label="PATO_0000384">obo:'male'</h1>
+                <div class="glossary-ref">
+                    <a title="PATO_0000384" href ="#pato_0000384"><dfn title="PATO_0000384" href ="#pato_0000384">obo:'male'</dfn></a>: A biological sex quality inhering in an individual or a population whose sex organs contain only male gametes.<p> <a title="PATO_0000384" href ="#pato_0000384">obo:'male'</a> is a <a title="PATO_0001894" href ="#pato_0001894">obo:'phenotypic sex'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'uncurated'</p>
+                </div>
+            </section>
+            <!-- obo:'physical object quality' (PATO_0001241) -->
+            <section id="pato_0001241">
+                <h1 label="PATO_0001241">obo:'physical object quality'</h1>
+                <div class="glossary-ref">
+                    <a title="PATO_0001241" href ="#pato_0001241"><dfn title="PATO_0001241" href ="#pato_0001241">obo:'physical object quality'</dfn></a>: A quality which inheres in a continuant.<p> <a title="PATO_0001241" href ="#pato_0001241">obo:'physical object quality'</a> is a <a title="PATO_0000001" href ="#pato_0000001">obo:'quality'</a> and  has the following child: <a title="PATO_0001995" href ="#pato_0001995">obo:'organismal quality'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'uncurated'</p>
+                </div>
+            </section>
+            <!-- obo:'hermaphrodite' (PATO_0001340) -->
+            <section id="pato_0001340">
+                <h1 label="PATO_0001340">obo:'hermaphrodite'</h1>
+                <div class="glossary-ref">
+                    <a title="PATO_0001340" href ="#pato_0001340"><dfn title="PATO_0001340" href ="#pato_0001340">obo:'hermaphrodite'</dfn></a>: A biological sex quality inhering in an organism or a population with both male and female sexual organs in one individual.<p> <a title="PATO_0001340" href ="#pato_0001340">obo:'hermaphrodite'</a> is a <a title="PATO_0001894" href ="#pato_0001894">obo:'phenotypic sex'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'uncurated'</p>
+                </div>
+            </section>
+            <!-- obo:'pseudohermaphrodite' (PATO_0001827) -->
+            <section id="pato_0001827">
+                <h1 label="PATO_0001827">obo:'pseudohermaphrodite'</h1>
+                <div class="glossary-ref">
+                    <a title="PATO_0001827" href ="#pato_0001827"><dfn title="PATO_0001827" href ="#pato_0001827">obo:'pseudohermaphrodite'</dfn></a>: A biological sex quality inhering in an individual or a population by virtue of having internal reproductive organs of one sex and external sexual characteristics of the other sex.<p> <a title="PATO_0001827" href ="#pato_0001827">obo:'pseudohermaphrodite'</a> is a <a title="PATO_0001894" href ="#pato_0001894">obo:'phenotypic sex'</a> and  has the following children: <a title="PATO_0001829" href ="#pato_0001829">obo:'female pseudohermaphrodite'</a>, <a title="PATO_0001828" href ="#pato_0001828">obo:'male pseudohermaphrodite'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'uncurated'</p>
+                </div>
+            </section>
+            <!-- obo:'male pseudohermaphrodite' (PATO_0001828) -->
+            <section id="pato_0001828">
+                <h1 label="PATO_0001828">obo:'male pseudohermaphrodite'</h1>
+                <div class="glossary-ref">
+                    <a title="PATO_0001828" href ="#pato_0001828"><dfn title="PATO_0001828" href ="#pato_0001828">obo:'male pseudohermaphrodite'</dfn></a>: A biological sex quality inhering in an individual or a population by virtue of having internal reproductive organs of male and external sexual characteristics of female.<p> <a title="PATO_0001828" href ="#pato_0001828">obo:'male pseudohermaphrodite'</a> is a <a title="PATO_0001827" href ="#pato_0001827">obo:'pseudohermaphrodite'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'uncurated'</p>
+                </div>
+            </section>
+            <!-- obo:'female pseudohermaphrodite' (PATO_0001829) -->
+            <section id="pato_0001829">
+                <h1 label="PATO_0001829">obo:'female pseudohermaphrodite'</h1>
+                <div class="glossary-ref">
+                    <a title="PATO_0001829" href ="#pato_0001829"><dfn title="PATO_0001829" href ="#pato_0001829">obo:'female pseudohermaphrodite'</dfn></a>: A biological sex quality inhering in an individual or a population by virtue of having internal reproductive organs of female and external sexual characteristics of male.<p> <a title="PATO_0001829" href ="#pato_0001829">obo:'female pseudohermaphrodite'</a> is a <a title="PATO_0001827" href ="#pato_0001827">obo:'pseudohermaphrodite'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'uncurated'</p>
+                </div>
+            </section>
+            <!-- obo:'phenotypic sex' (PATO_0001894) -->
+            <section id="pato_0001894">
+                <h1 label="PATO_0001894">obo:'phenotypic sex'</h1>
+                <div class="glossary-ref">
+                    <a title="PATO_0001894" href ="#pato_0001894"><dfn title="PATO_0001894" href ="#pato_0001894">obo:'phenotypic sex'</dfn></a>: <p> <a title="PATO_0001894" href ="#pato_0001894">obo:'phenotypic sex'</a> is a <a title="PATO_0000047" href ="#pato_0000047">obo:'biological sex'</a> and  has the following children: <a title="PATO_0000383" href ="#pato_0000383">obo:'female'</a>, <a title="PATO_0001340" href ="#pato_0001340">obo:'hermaphrodite'</a>, <a title="PATO_0000384" href ="#pato_0000384">obo:'male'</a>, <a title="PATO_0001827" href ="#pato_0001827">obo:'pseudohermaphrodite'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'uncurated'</p>
+                </div>
+            </section>
+            <!-- obo:'organismal quality' (PATO_0001995) -->
+            <section id="pato_0001995">
+                <h1 label="PATO_0001995">obo:'organismal quality'</h1>
+                <div class="glossary-ref">
+                    <a title="PATO_0001995" href ="#pato_0001995"><dfn title="PATO_0001995" href ="#pato_0001995">obo:'organismal quality'</dfn></a>: A quality that inheres in an entire organism or part of an organism.<p> <a title="PATO_0001995" href ="#pato_0001995">obo:'organismal quality'</a> is a <a title="PATO_0001241" href ="#pato_0001241">obo:'physical object quality'</a> and  has the following children: <a title="PATO_0000186" href ="#pato_0000186">obo:'behavioral quality'</a>, <a title="PATO_0000047" href ="#pato_0000047">obo:'biological sex'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'uncurated'</p>
+                </div>
+            </section>
+            <!-- obo:'handedness' (PATO_0002201) -->
+            <section id="pato_0002201">
+                <h1 label="PATO_0002201">obo:'handedness'</h1>
+                <div class="glossary-ref">
+                    <a title="PATO_0002201" href ="#pato_0002201"><dfn title="PATO_0002201" href ="#pato_0002201">obo:'handedness'</dfn></a>: A behavioral quality inhering ina bearer by virtue of the bearer's unequal distribution of fine motor skill between its left and right hands or feet.<p> <a title="PATO_0002201" href ="#pato_0002201">obo:'handedness'</a> is a <a title="PATO_0000186" href ="#pato_0000186">obo:'behavioral quality'</a> and  has the following children: <a title="PATO_0002204" href ="#pato_0002204">obo:'ambidextrous handedness'</a>, <a title="PATO_0002202" href ="#pato_0002202">obo:'left handedness'</a>, <a title="PATO_0002203" href ="#pato_0002203">obo:'right handedness'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'uncurated'</p>
+                </div>
+            </section>
+            <!-- obo:'left handedness' (PATO_0002202) -->
+            <section id="pato_0002202">
+                <h1 label="PATO_0002202">obo:'left handedness'</h1>
+                <div class="glossary-ref">
+                    <a title="PATO_0002202" href ="#pato_0002202"><dfn title="PATO_0002202" href ="#pato_0002202">obo:'left handedness'</dfn></a>: Handedness where the organism preferentially uses the left hand or foot for tasks requiring the use of a single hand or foot or a dominant hand or foot.<p> <a title="PATO_0002202" href ="#pato_0002202">obo:'left handedness'</a> is a <a title="PATO_0002201" href ="#pato_0002201">obo:'handedness'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'uncurated'</p>
+                </div>
+            </section>
+            <!-- obo:'right handedness' (PATO_0002203) -->
+            <section id="pato_0002203">
+                <h1 label="PATO_0002203">obo:'right handedness'</h1>
+                <div class="glossary-ref">
+                    <a title="PATO_0002203" href ="#pato_0002203"><dfn title="PATO_0002203" href ="#pato_0002203">obo:'right handedness'</dfn></a>: Handedness where the organism preferentially uses the right hand or foot for tasks requiring the use of a single hand or foot or a dominant hand or foot.<p> <a title="PATO_0002203" href ="#pato_0002203">obo:'right handedness'</a> is a <a title="PATO_0002201" href ="#pato_0002201">obo:'handedness'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'uncurated'</p>
+                </div>
+            </section>
+            <!-- obo:'ambidextrous handedness' (PATO_0002204) -->
+            <section id="pato_0002204">
+                <h1 label="PATO_0002204">obo:'ambidextrous handedness'</h1>
+                <div class="glossary-ref">
+                    <a title="PATO_0002204" href ="#pato_0002204"><dfn title="PATO_0002204" href ="#pato_0002204">obo:'ambidextrous handedness'</dfn></a>: Handedness where the organism exhibits no overall dominance in the use of right or left hand or foot in the performance of tasks that require one hand or foot or a dominant hand or foot.<p> <a title="PATO_0002204" href ="#pato_0002204">obo:'ambidextrous handedness'</a> is a <a title="PATO_0002201" href ="#pato_0002201">obo:'handedness'</a>.</p><p>Type: Class</p><p>Curation Status: obo:'uncurated'</p>
+                </div>
+            </section>
+	</section>
+<footer class="site-footer">
+  <span class="site-footer-owner"><a href="https://github.com/wolfborg/nidm">NIDM HTML</a> is maintained by <a href="https://github.com/wolfborg">wolfborg</a>.</span>
+
+  <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+</footer>
+
+</section>
+
+</body>
+</html>
