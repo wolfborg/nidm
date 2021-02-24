@@ -79,6 +79,7 @@ class OwlNidmHtml:
             classes_by_types[None]
 
         for class_uri in all_classes:
+            #print(class_uri)
             self.create_class_section(
                 class_uri,
                 self.owl.get_definition(class_uri),
@@ -619,7 +620,7 @@ class OwlNidmHtml:
             if x != "" and x[0] != "#" and x[0] != "@" and x[0] != "[":
                 if "owl:Class" not in x:
                     continue
-                print(x)
+                #print(x)
                 x = shlex.split(x)
                 subject = x[0]
                 if subject not in classes:
@@ -714,3 +715,6 @@ if __name__ == "__main__":
     
     owl_file = os.path.join(TERMS_FOLDER, 'imports/obo_import.ttl')
     owl_process(owl_file, None, "OBO", prefix=str(OBO), term_prefix="obo")
+
+    owl_file = os.path.join(TERMS_FOLDER, 'imports/onli_import.ttl')
+    owl_process(owl_file, None, "onli", prefix=str(ONLI), term_prefix="onli")
