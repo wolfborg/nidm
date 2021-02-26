@@ -10,6 +10,9 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix nidm: <http://purl.org/nidash/nidm#> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
 @base <http://purl.org/nidash/nidm/sio_import.owl> .
 
 
@@ -225,6 +228,8 @@ ns4:SIO_000300 rdf:type ns2:DatatypeProperty ,
 ns4:SIO_000004 rdf:type ns2:Class ;
                
                ns3:label "material entity"@en ;
+
+               rdfs:subClassOf prov:Entity ;
                
                ns4:subset "core" ;
                
@@ -257,6 +262,8 @@ ns4:SIO_000009 rdf:type ns2:Class ;
 ns4:SIO_000015 rdf:type ns2:Class ;
                
                ns3:label "information content entity"@en ;
+
+               rdfs:subClassOf prov:Entity ;
                
                ns4:subset "ice+" ,
                           "core" ;
@@ -1243,6 +1250,8 @@ ns4:SIO_000612 rdf:type ns2:Class ;
 ns4:SIO_000614 rdf:type ns2:Class ;
                
                ns3:label "attribute"@en ;
+
+               rdfs:subClassOf prov:Entity ;
                
                ns0:description "An attribute is a characteristic of some entity."@en ;
                
@@ -1477,6 +1486,8 @@ ns4:SIO_000956 rdf:type ns2:Class ;
 ns4:SIO_001000 rdf:type ns2:Class ;
                
                ns3:label "clinical trial"@en ;
+
+               rdfs:subClassOf nidm:Project ;
                
                ns0:identifier "SIO_001000" ;
                
@@ -1539,6 +1550,8 @@ ns4:SIO_001013 rdf:type ns2:Class ;
 ns4:SIO_001014 rdf:type ns2:Class ;
                
                ns3:label "ethnicity"@en ;
+
+               rdfs:subClassOf obo:PATO_0001995 ;
                
                ns0:identifier "SIO_001014" ;
                
@@ -1553,6 +1566,8 @@ ns4:SIO_001014 rdf:type ns2:Class ;
 ns4:SIO_001015 rdf:type ns2:Class ;
                
                ns3:label "race"@en ;
+
+               rdfs:subClassOf obo:PATO_0001995 ;
                
                ns0:identifier "SIO_001015" ;
                
@@ -1602,6 +1617,7 @@ ns4:SIO_001068 rdf:type ns2:Class ;
                
                ns3:label "control group"@en ;
                
+               rdfs:subClassOf nidm:Group ;
  
                ns0:description "A control group is a group of individuals that are not subject to an intervention of interest, but rather serve as a baseline to compare the outcomes in the intervention group."@en ;
                
@@ -1616,6 +1632,8 @@ ns4:SIO_001068 rdf:type ns2:Class ;
 ns4:SIO_001069 rdf:type ns2:Class ;
                
                ns3:label "intervention group"@en ;
+
+               rdfs:subClassOf nidm:Group ;
                
                ns0:description "An intervention group is a group of individuals that are subject to an intervention."@en ;
                

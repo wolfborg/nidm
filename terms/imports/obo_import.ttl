@@ -714,6 +714,8 @@ obo:OBI_0302729 rdf:type owl:Class ;
 obo:OBI_0400107 rdf:type owl:Class ;
                 
                 rdfs:label "computer"@en ;
+
+                rdfs:subClassOf sio:SIO_000956 ;
                 
                 obo:IAO_0000115 "A computer is an instrument which manipulates (stores, retrieves, and processes) data according to a list of instructions."@en ;
                 
@@ -764,6 +766,8 @@ obo:OBI_0400107 rdf:type owl:Class ;
 obo:PATO_0000001 rdf:type owl:Class ;
                  
                  rdfs:label "quality"^^xsd:string ;
+
+                 rdfs:subClassOf sio:SIO_000614 ;
                  
                  obo:IAO_0000115 "A dependent entity that inheres in a bearer by virtue of how the bearer is related to other entities"^^xsd:string ;
                  

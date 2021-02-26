@@ -7,6 +7,8 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix owl2xml: <http://www.w3.org/2006/12/owl2-xml#> .
+@prefix nidm: <http://purl.org/nidash/nidm#> .
+@prefix sio: <http://semanticscience.org/resource/> .
 @base <http://purl.org/nidash/nidm/ontoneurolog_instruments_import.owl> .
 
 <http://purl.org/nidash/nidm/ontoneurolog_instruments_import.owl> rdf:type owl:Ontology ;
@@ -52,7 +54,9 @@ skos:definition rdf:type owl:AnnotationProperty .
 ###  http://neurolog.unice.fr/ontoneurolog/v3.0/instrument.owl#assessment-instrument
 
 :assessment-instrument rdf:type owl:Class ;
-                       
+
+                       rdfs:subClassOf nidm:AcquisitionObject ;
+
                        skos:definition """Instrument (CDISC Clinical Research Glossary, v. 8.0): “A means to capture data (e.g., questionnaire, diary) plus all the information and documentation that support its use. NOTE: Generally, instruments include clearly defined methods and instructions for administration or responding, a standard format for data collection, and well-documented methods for scoring, analysis, and interpretation of results.”
 \"Testing procedures are normally designed to be administered under carefully controlled or standardised conditions that embody systematic scoring protocols\" (Source: ITC International Guidelines for Test Use, http://www.intestcom.org/Guidelines).
 ASSESSMENT INSTRUMENTS are divided among PSYCHOLOGICAL INSTRUMENTS, BEHAVIOURAL INSTRUMENTS, and NEUROCLINICAL INSTRUMENTS according to the kind of entity (a function or a behaviour) they explore.
@@ -181,6 +185,8 @@ The CODED VARIABLE of the INSTRUMENT 'Beck Depression Inventory' which measures 
 
 :instrument-based-assessment rdf:type owl:Class ;
                              
+                             rdfs:subClassOf nidm:Acquisition ;
+
                              skos:definition """An INSTRUMENT-BASED ASSESSMENT is a SUBJECT DATA ACQUISITION that captures some required information concerning the subject and involves the integration of data from instruments: TEST(-INSTRUMENTS) and/or QUESTIONNAIRES. When the purpose of the patient's examination is the assessment of her/his behavior, the examiner uses questionnaires rather than tests to rate the level of intensity/severity of a behavioral trait. Then, the appropriate action is a BEHAVIOURAL INTERVIEW rather than a BEHAVIOURAL TEST which is less adapted. 
 INSTRUMENT-BASED ASSESSMENTS are divided among TEST-BASED ASSESSMENTS and QUESTIONNAIRE-BASED ASSESSMENTS according to the kind of instrument which is administrated and therefore to the specific roles played by the subject and the healthcare professional in the assessment.""" .
 
@@ -189,6 +195,8 @@ INSTRUMENT-BASED ASSESSMENTS are divided among TEST-BASED ASSESSMENTS and QUESTI
 ###  http://neurolog.unice.fr/ontoneurolog/v3.0/instrument.owl#instrument-variable
 
 :instrument-variable rdf:type owl:Class ;
+
+                     rdfs:subClassOf nidm:AcquisitionObject ;
                      
                      skos:definition """An Instrument variable is the part of an instrument that refers to the precise measurement of a specific quality of a subject's capacity (function) or a subject's trait (in a qualitative or quantitative way). Instrument variables specify how the registering of scores must be done, by characterizing the type of values of the scores. Several instrument variables may be necessary to characterize the subject's function or trait explored by the instrument.
 INSTRUMENT VARIABLES are divided among MAIN and SECONDARY VARIABLES according to whether they explore the same domain than the ASSESSMENT INSTRUMENT.
@@ -421,6 +429,8 @@ QUESTIONNAIRE-BASED ASSESSMENTS are divided among PSYCHOLOGICAL INTERVIEWS, BEHA
 ###  http://neurolog.unice.fr/ontoneurolog/v3.0/instrument.owl#scale
 
 :scale rdf:type owl:Class ;
+
+       rdfs:subClassOf sio:SIO_000078 ;
        
        skos:definition """“A rating scale is a set of categories designed to elicit information about a quantitative or a qualitative attribute in the social sciences” (Source: http://en.wikipedia.org).
 “Scales can focus on different aspects of mood, behavior, and functional abilities”. (Source: Lezak et al., 2004).
@@ -432,6 +442,8 @@ Example: The CODED VARIABLE of the INSTRUMENT 'Beck Depression Inventory' which 
 ###  http://neurolog.unice.fr/ontoneurolog/v3.0/instrument.owl#scale-item
 
 :scale-item rdf:type owl:Class ;
+
+            rdfs:subClassOf sio:SIO_000366 ;
             
             skos:definition """During an observation, the process of approximating the observed QUALITY's value (called QUALE in DOLCE) turns the continuous QUALE of the observed quality into a discrete approximation entity which is a SCALE ITEM. While the construction of the SCALE, a set of QUALITY's values are chosen and each of them is coded by a SCALE ITEM. Generally, a SCALE consists of 4 SCALE ITEMS (short version) or of  6 SCALE ITEMS (long version).
 Example: In the INSTRUMENT 'Beck Depression Inventory', the SCALE ITEM 'I feel sad much of the time' belongs to the SCALE which is the scale of the CODED VARIABLE which measures the QUALITY  'Sadness'. This SCALE ITEM refers to a specific level of sadness.""" .
@@ -442,6 +454,8 @@ Example: In the INSTRUMENT 'Beck Depression Inventory', the SCALE ITEM 'I feel s
 
 :score rdf:type owl:Class ;
        
+       rdfs:subClassOf sio:SIO_000366 ;
+
        skos:definition "SCORES are divided into CODED SCORES AND NUMERICAL SCORES according to whether they are coded by a LEXICAL ITEM or a NUMBER." .
 
 
@@ -516,6 +530,8 @@ TEST-BASED ASSESSMENTS are divided among PSYCHOLOGICAL TESTS, BEHAVIOURAL TESTS 
 
 :variable-assessment rdf:type owl:Class ;
                      
+                     rdfs:subClassOf nidm:Acquisition ;
+
                      skos:definition "A variable assessment is an activity that results in a value assigned to a specific item on an assessment instrument question or test." .
 
 
