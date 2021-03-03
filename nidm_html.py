@@ -5,6 +5,7 @@ import sys
 import glob
 from nidmresults.owl.owl_reader import OwlReader
 from nidmresults.objects.constants_rdflib import *
+from rdflib import RDF
 import markdown2
 import shlex
 import warnings
@@ -28,6 +29,7 @@ class OwlNidmHtml:
                  attributed_to=None, prefix=None, commentable=False,
                  intro=None, term_prefix=None):
         self.owl = OwlReader(owl_file, import_files)
+        self.owl.graph.bind('owl', 'http://www.w3.org/2002/07/owl#')
         self.owl.graph.bind('dct', 'http://purl.org/dc/terms/')
         self.owl.graph.bind('dicom', 'http://purl.org/nidash/dicom#')
         self.owl.graph.bind('nidm', 'http://purl.org/nidash/nidm#')
@@ -55,6 +57,16 @@ class OwlNidmHtml:
                              derived_from, attributed_to, prefix, intro=None):
         self.create_title(self.name+": Types and relations", "definitions")
 
+        self.text += "<a href='#Classes'>Classes</a>"
+        if self.has_type_entries(OWL['DatatypeProperty']):
+            self.text += " | <a href='#datatypeproperties'>Datatype Properties</a>"
+        if self.has_type_entries(OWL['AnnotationProperty']):
+            self.text += " | <a href='#annotationproperties'>Annotation Properties</a>"
+        if self.has_type_entries(OWL['ObjectProperty']):
+            self.text += " | <a href='#objectproperties'>Object Properties</a>"
+        if self.has_type_entries(OWL['NamedIndividual']):
+            self.text += " | <a href='#namedindividuals'>Named Individuals</a>"
+
         if intro is not None:
             self.text += intro
 
@@ -78,8 +90,10 @@ class OwlNidmHtml:
             classes_by_types[PROV['Agent']] + \
             classes_by_types[None]
 
+        self.text += "<h1 id='Classes'>Classes</h1>"
+
         for class_uri in all_classes:
-            #print(class_uri)
+            print(class_uri)
             self.create_class_section(
                 class_uri,
                 self.owl.get_definition(class_uri),
@@ -87,15 +101,62 @@ class OwlNidmHtml:
                 used_by, generated_by, derived_from, attributed_to,
                 children=not (
                     self.owl.get_prov_class(class_uri) == PROV['Entity']))
+        
+        self.add_type_section(OWL['DatatypeProperty'], used_by, generated_by, derived_from, attributed_to)
+        self.add_type_section(OWL['AnnotationProperty'], used_by, generated_by, derived_from, attributed_to)
+        self.add_type_section(OWL['ObjectProperty'], used_by, generated_by, derived_from, attributed_to)
+        self.add_type_section(OWL['NamedIndividual'], used_by, generated_by, derived_from, attributed_to)
 
         #if subcomponent_name:
         #    self.text += """
         #</section>"""
 
-
         self.close_sections()
+
+    def add_type_section(self, rdf_type, used_by, generated_by, derived_from, attributed_to):
+        entries = self.get_type_entries(rdf_type)
+        
+        if entries:
+            if rdf_type == OWL['DatatypeProperty']:
+                self.text += "<h1 id='datatypeproperties'>Datatype Properties</h1>"
+            elif rdf_type == OWL['AnnotationProperty']:
+                self.text += "<h1 id='annotationproperties'>Annotation Properties</h1>"
+            elif rdf_type == OWL['ObjectProperty']:
+                self.text += "<h1 id='objectproperties'>Object Properties</h1>"
+            elif rdf_type == OWL['NamedIndividual']:
+                self.text += "<h1 id='namedindividuals'>Named Individuals</h1>"
+
+            for entry in entries:
+                print(entry)
+                self.create_class_section(
+                    entry,
+                    self.owl.get_definition(entry),
+                    self.owl.attributes.setdefault(entry, None),
+                    used_by, generated_by, derived_from, attributed_to,
+                    children=not (
+                        self.owl.get_prov_class(entry) == PROV['Entity']))
     
+    def get_type_entries(self, rdf_type):
+        entries = self.owl.all_of_rdf_type(rdf_type, but_type=OWL['Class'])
+        if entries:
+            filtered = list()
+            for entry in entries:
+                pre = self.owl.get_label(entry).split(":")[0]
+                if pre.lower() == self.term_prefix:
+                    filtered.append(entry)
+            if filtered:
+                return filtered
+        return False
     
+    def has_type_entries(self, rdf_type):
+        entries = self.owl.all_of_rdf_type(rdf_type, but_type=OWL['Class'])
+        if entries:
+            for entry in entries:
+                pre = self.owl.get_label(entry).split(":")[0]
+                if pre.lower() == self.term_prefix:
+                    return True
+        return False
+
     def create_subcomponent_table(self, classes, table_num,
                                   subcomponent_name=None):
         if subcomponent_name:
@@ -275,11 +336,11 @@ class OwlNidmHtml:
         self.text += """
             <!-- """+class_label+""" ("""+class_name+""")"""+""" -->
             <section id=\""""+class_name.lower()+"""\">
-                <h1 label=\""""+class_name+"""\">"""+class_label+"""</h1>
+                <h2 label=\""""+class_name+"""\">"""+class_label+"""</h2>
                 <div class="glossary-ref">
                     """+self.term_link(class_uri, "dfn") + ": " + definition
 
-        self.text += "<p> "+self.term_link(class_uri)+" is"
+        self.text += "<p>"+self.term_link(class_uri)+" is"
 
         nidm_class = self.owl.get_nidm_parent(class_uri)
         if nidm_class:
@@ -289,7 +350,31 @@ class OwlNidmHtml:
             prov_class = self.owl.get_prov_class(class_uri)
             if prov_class:
                 #print(self.term_prefix+": "+prov_class)
-                self.text += " a "+self.owl.get_label(prov_class)
+                self.text += " a "+self.term_link(prov_class)
+            else:
+                #look in NIDM file
+                nidm_file = os.path.join(TERMS_FOLDER, 'nidm-experiment.owl')
+                nidm_owl = OwlReader(nidm_file)
+                nidm_subclass = self.get_nidm_subclass(class_uri, nidm_owl)
+                if nidm_subclass:
+                    self.text += " a "+self.term_link(nidm_subclass)
+                else:
+                    subprop = self.get_subprop(class_uri)
+                    if subprop:
+                        self.text += " a "+self.term_link(subprop)
+                    else:
+                        nidm_subprop = self.get_nidm_subprop(class_uri, nidm_owl)
+                        if nidm_subprop:
+                            self.text += " a "+self.term_link(nidm_subprop)
+                        else:
+                            types = list(self.owl.graph.objects(class_uri, RDF['type']))
+                            if len(types) > 1 and OWL['NamedIndividual'] in types:
+                                types.remove(OWL['NamedIndividual'])
+                            if types:
+                                self.text += " a "+self.term_link(types[0])
+                                if len(types) > 1:
+                                    for itype in types[1:]:
+                                        self.text += ", "+self.term_link(itype)
 
         found_used_by = False
         if used_by:
@@ -367,7 +452,7 @@ class OwlNidmHtml:
         range_value = self.owl.get_range(class_uri)
         domain = self.owl.get_domain(class_uri)
         same = self.owl.get_same_as(class_uri)
-        indiv_type = self.owl.get_individual_type(class_uri)
+        indiv_types = list(self.owl.graph.objects(class_uri, RDF['type']))
 
         editor = list(self.owl.graph.objects(class_uri, OBO_TERM_EDITOR))
         if editor:
@@ -379,9 +464,17 @@ class OwlNidmHtml:
         else:
             editor = ""
 
-        if indiv_type:
+        if indiv_types:
             try:
-                self.text += "<p>Type: "+self.owl.get_name(indiv_type)+"</p>"
+                self.text += "<p>Type: "
+                if self.owl.is_named_individual(class_uri):
+                    self.text += self.term_link(OWL['NamedIndividual'])
+                else:
+                    self.text += self.term_link(indiv_types[0])
+                    if len(indiv_types) > 1:
+                        for itype in indiv_types[1:]:
+                            self.text += ", "+self.term_link(itype)
+                self.text+"</p>"
             except:
                 print("URI invalid for: "+class_uri)
         if range_value:
@@ -389,11 +482,15 @@ class OwlNidmHtml:
         if domain:
             self.text += "<p>Domain: "+domain+"</p>"
         if same:
-            self.text += "<p>Same as: "+same+"</p>"
+            self.text += "<p>Same as: "+self.term_link(same)+"</p>"
         if curation:
-            self.text += "<p>Curation Status: "+self.owl.get_label(curation)+"</p>"
+            self.text += "<p>Curation Status: "+self.term_link(curation)+"</p>"
         if editor:
-            self.text += "<p>Editor: "+editor+"</p>"
+            try:
+                self.text += "<p>Editor: "+self.term_link(editor)+"</p>"
+            except:
+                print("URI invalid for: "+editor)
+                self.text += "<p>Editor: "+editor
         if note:
             self.text += "<p>Editor Note: "+note+"</p>"
         
@@ -527,7 +624,23 @@ class OwlNidmHtml:
 
         for x in range(0, self.section_open):
             self.text += "\n"+tabs+"</section>\n"
+
+    def get_nidm_subclass(self, class_uri, nidm_owl):
+        nidm_subclasses = nidm_owl.get_direct_parents(class_uri)
+        for nidm_subclass in nidm_subclasses:
+            return nidm_subclass
+        return False
     
+    def get_subprop(self, prop_uri):
+        for parent in self.owl.graph.objects(prop_uri, RDFS['subPropertyOf']):
+            return parent
+        return False
+
+    def get_nidm_subprop(self, prop_uri, nidm_owl):
+        for parent in nidm_owl.graph.objects(prop_uri, RDFS['subPropertyOf']):
+            return parent
+        return False
+
     # Write out specification
     def write_specification(self, spec_file="index.html", component=None,
                             version=None):
@@ -692,29 +805,17 @@ if __name__ == "__main__":
     owlspec.write_specification(component=component_name, version=nidm_version)
 
     
-    # # BIDS
     owl_file = os.path.join(TERMS_FOLDER, 'imports/bids_import.ttl')
-    # import_files = None
-    # #import_files = glob.glob(os.path.join(TERMS_FOLDER, "imports", '*.ttl'))
-    # owlspec2 = OwlNidmHtml(owl_file, import_files, "BIDS", {}, used_by, generated_by, derived_from, prefix=str(BIDS), term_prefix="bids")
-    
-    # if not nidm_version == "dev":
-    #     owlspec2.text = owlspec.text.replace("(under development)", nidm_original_version)
-    #     owlspec2.text = owlspec.text.replace("img/", "img/nidm-results_"+nidm_version+"/") #where versions are included
-    
-    # component_name = "bids"
-    # owlspec2._header_footer(component=component_name, version=nidm_version)
-    # owlspec2.write_specification(spec_file="bids.html", component=component_name, version=nidm_version)
     owl_process(owl_file, None, "BIDS", prefix=str(BIDS), term_prefix="bids")
 
     owl_file = os.path.join(TERMS_FOLDER, 'imports/dicom_import.ttl')
     owl_process(owl_file, None, "DICOM", prefix=str(DICOM), term_prefix="dicom")
 
-    owl_file = os.path.join(TERMS_FOLDER, 'imports/sio_import.ttl')
+    owl_file = os.path.join(TERMS_FOLDER, 'imports/sio_import-old.ttl')
     owl_process(owl_file, None, "SIO", prefix=str(SIO), term_prefix="sio")
     
     owl_file = os.path.join(TERMS_FOLDER, 'imports/obo_import.ttl')
     owl_process(owl_file, None, "OBO", prefix=str(OBO), term_prefix="obo")
 
     owl_file = os.path.join(TERMS_FOLDER, 'imports/onli_import.ttl')
-    owl_process(owl_file, None, "onli", prefix=str(ONLI), term_prefix="onli")
+    owl_process(owl_file, None, "ONLI", prefix=str(ONLI), term_prefix="onli")
