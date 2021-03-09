@@ -57,7 +57,7 @@ class OwlNidmHtml:
                              derived_from, attributed_to, prefix, intro=None):
         self.create_title(self.name+": Types and relations", "definitions")
 
-        self.text += "<a href='#Classes'>Classes</a>"
+        self.text += "<a href='#classes'>Classes</a>"
         if self.has_type_entries(OWL['DatatypeProperty']):
             self.text += " | <a href='#datatypeproperties'>Datatype Properties</a>"
         if self.has_type_entries(OWL['AnnotationProperty']):
@@ -90,7 +90,7 @@ class OwlNidmHtml:
             classes_by_types[PROV['Agent']] + \
             classes_by_types[None]
 
-        self.text += "<h1 id='Classes'>Classes</h1>"
+        self.text += "<h1 id='classes'>Classes</h1>"
 
         for class_uri in all_classes:
             print(class_uri)
