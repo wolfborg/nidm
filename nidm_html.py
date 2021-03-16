@@ -3,8 +3,10 @@ import codecs
 import collections
 import sys
 import glob
-from nidmresults.owl.owl_reader import OwlReader
-from nidmresults.objects.constants_rdflib import *
+#from nidmresults.owl.owl_reader import OwlReader
+#from nidmresults.objects.constants_rdflib import *
+from nidm_owl_reader import OwlReader
+from nidm_constants import *
 from rdflib import RDF
 import markdown2
 import shlex
